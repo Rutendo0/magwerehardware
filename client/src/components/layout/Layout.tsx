@@ -1,21 +1,21 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import Header from './header';
 import Footer from './footer';
-import WhatsAppChat from '../ui/whatsapp-chat';
+import WhatsappChat from '@/components/ui/whatsapp-chat';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
         {children}
       </main>
       <Footer />
-      <WhatsAppChat />
+      <WhatsappChat />
     </div>
   );
 };

@@ -313,6 +313,7 @@ const ProductGridItem: FC<{ product: Product }> = ({ product }) => {
 // Main Category Component
 const ProductCategory: FC = () => {
   const [match, params] = useRoute('/category/:slug');
+  const [allProductsMatch] = useRoute('/products');
   const [_, navigate] = useLocation();
   const slug = params?.slug || '';
   const [sortOption, setSortOption] = useState('featured');
@@ -321,13 +322,23 @@ const ProductCategory: FC = () => {
   
   const { data: category, isLoading: categoryLoading } = useQuery<Category>({
     queryKey: [`/api/categories/${slug}`],
-    enabled: !!slug,
+    enabled: !!slug && !allProductsMatch,
   });
   
-  const { data: products, isLoading: productsLoading } = useQuery<Product[]>({
-    queryKey: [`/api/products/category/${category?.name}`],
-    enabled: !!category?.name,
+  // Fetch all products if we're on the /products route
+  const { data: allProducts, isLoading: allProductsLoading } = useQuery<Product[]>({
+    queryKey: ['/api/products'],
+    enabled: !!allProductsMatch,
   });
+  
+  const { data: categoryProducts, isLoading: categoryProductsLoading } = useQuery<Product[]>({
+    queryKey: [`/api/products/category/${category?.name}`],
+    enabled: !!category?.name && !allProductsMatch,
+  });
+  
+  // Use the appropriate products data source
+  const products = allProductsMatch ? allProducts : categoryProducts;
+  const productsLoading = allProductsMatch ? allProductsLoading : categoryProductsLoading;
   
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 9;
@@ -372,7 +383,8 @@ const ProductCategory: FC = () => {
   
   if (!match) return null;
   
-  if (categoryLoading) {
+  // Loading state
+  if (categoryLoading || (allProductsMatch && allProductsLoading)) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse h-8 w-1/3 bg-gray-200 mb-4"></div>
@@ -393,6 +405,223 @@ const ProductCategory: FC = () => {
     );
   }
   
+  // If we're on the all products route
+  if (allProductsMatch) {
+    return (
+      <div className="bg-gray-50 min-h-screen">
+        {/* Category Banner */}
+        <div className="relative h-64 md:h-80 overflow-hidden">
+          <img 
+            src={powerToolsImage} 
+            alt="All Products"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30 flex items-center">
+            <div className="container mx-auto px-4">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">All Products</h1>
+              <p className="text-white/90 max-w-xl text-base md:text-lg">
+                Browse our complete collection of high-quality hardware and construction materials
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="container mx-auto px-4 py-8">
+          <Breadcrumb className="mb-6">
+            <BreadcrumbItem>
+              <BreadcrumbLink 
+                className="cursor-pointer"
+                onClick={() => navigate('/')}
+              >
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink>
+                All Products
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Filters Sidebar - Desktop */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <div className="bg-white p-5 rounded-lg shadow-sm sticky top-6">
+                <h3 className="font-bold text-lg mb-4 border-b pb-2">Filters</h3>
+                
+                <div className="space-y-5">
+                  <div>
+                    <h4 className="font-medium mb-2">Price Range</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center">
+                        <input type="checkbox" id="price-1" className="rounded text-primary mr-2" />
+                        <label htmlFor="price-1" className="text-sm">Under $25</label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="price-2" className="rounded text-primary mr-2" />
+                        <label htmlFor="price-2" className="text-sm">$25 - $50</label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="price-3" className="rounded text-primary mr-2" />
+                        <label htmlFor="price-3" className="text-sm">$50 - $100</label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="price-4" className="rounded text-primary mr-2" />
+                        <label htmlFor="price-4" className="text-sm">$100 - $200</label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="price-5" className="rounded text-primary mr-2" />
+                        <label htmlFor="price-5" className="text-sm">$200+</label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t pt-4">
+                    <h4 className="font-medium mb-2">Availability</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center">
+                        <input type="checkbox" id="stock" className="rounded text-primary mr-2" />
+                        <label htmlFor="stock" className="text-sm">In Stock</label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="sale" className="rounded text-primary mr-2" />
+                        <label htmlFor="sale" className="text-sm">On Sale</label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t pt-4">
+                    <h4 className="font-medium mb-2">Rating</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center">
+                        <input type="checkbox" id="rating-5" className="rounded text-primary mr-2" />
+                        <label htmlFor="rating-5" className="text-sm flex items-center">
+                          <div className="flex text-yellow-400 mr-1">
+                            {Array(5).fill(0).map((_, i) => (
+                              <Star key={i} className="h-3 w-3 fill-current" />
+                            ))}
+                          </div>
+                          & Up
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="rating-4" className="rounded text-primary mr-2" />
+                        <label htmlFor="rating-4" className="text-sm flex items-center">
+                          <div className="flex text-yellow-400 mr-1">
+                            {Array(4).fill(0).map((_, i) => (
+                              <Star key={i} className="h-3 w-3 fill-current" />
+                            ))}
+                          </div>
+                          & Up
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input type="checkbox" id="rating-3" className="rounded text-primary mr-2" />
+                        <label htmlFor="rating-3" className="text-sm flex items-center">
+                          <div className="flex text-yellow-400 mr-1">
+                            {Array(3).fill(0).map((_, i) => (
+                              <Star key={i} className="h-3 w-3 fill-current" />
+                            ))}
+                          </div>
+                          & Up
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <Button className="w-full mt-6">Apply Filters</Button>
+              </div>
+            </div>
+            
+            {/* Main Content Area */}
+            <div className="flex-1">
+              {/* Products Grid */}
+              <div className={`${viewMode === 'list' ? 'flex flex-col space-y-6' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'}`}>
+                {productsLoading ? (
+                  // Loading skeleton
+                  Array(9).fill(0).map((_, index) => (
+                    <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
+                      <div className={`${viewMode === 'list' ? 'flex' : ''}`}>
+                        <div className={`${viewMode === 'list' ? 'w-1/3' : ''} h-48 bg-gray-200`}></div>
+                        <div className="p-4 flex-1">
+                          <div className="h-6 bg-gray-200 w-3/4 mb-2"></div>
+                          <div className="h-4 bg-gray-200 w-1/2 mb-4"></div>
+                          <div className="h-8 bg-gray-200 w-1/3"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : currentProducts.length > 0 ? (
+                  // Render products in grid or list view
+                  currentProducts.map(product => (
+                    <div key={product.id}>
+                      {viewMode === 'list' ? (
+                        <ProductListItem product={product} />
+                      ) : (
+                        <ProductGridItem product={product} />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  // No products found
+                  <div className="col-span-full text-center py-16">
+                    <h2 className="text-2xl font-bold mb-2">No Products Found</h2>
+                    <p className="text-neutral-600 mb-8">There are no products available at the moment.</p>
+                    <Button onClick={() => navigate('/')}>
+                      Return to Home
+                    </Button>
+                  </div>
+                )}
+              </div>
+              
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center mt-12 bg-white p-4 rounded-lg shadow-sm">
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="h-9 w-9"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        size="sm"
+                        className={`${currentPage === page ? "bg-primary text-white" : ""} h-9 w-9`}
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                    
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="h-9 w-9"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  // Category not found
   if (!category) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
