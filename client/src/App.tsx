@@ -11,6 +11,7 @@ import ProductDetail from "./pages/product-detail";
 import Cart from "./pages/cart";
 import Contact from "./pages/contact";
 import About from "./pages/about";
+import Account from "./pages/account";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,10 +19,16 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/category/:slug" component={ProductCategory} />
+      <Route path="/category/:category/:subcategory" component={ProductCategory} />
       <Route path="/product/:id" component={ProductDetail} />
+      <Route path="/products" component={ProductCategory} />
       <Route path="/cart" component={Cart} />
       <Route path="/contact" component={Contact} />
       <Route path="/about" component={About} />
+      <Route path="/account" component={Account} />
+      <Route path="/bulk-orders" component={Contact} />
+      <Route path="/refer" component={Account} />
+      <Route path="/categories" component={ProductCategory} />
       <Route component={NotFound} />
     </Switch>
   );

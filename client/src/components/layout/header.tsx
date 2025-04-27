@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Search, ShoppingCart, User } from 'lucide-react';
+import { Search, ShoppingCart, User, Menu, Facebook, Instagram, Phone, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MagwereLogo from '@/lib/magwere-logo';
@@ -11,6 +11,27 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
+
+// Custom Link component to prevent nesting <a> elements
+const NavLink = ({ href, className, children }: { href: string, className?: string, children: React.ReactNode }) => {
+  const [location] = useLocation();
+  const isActive = location === href;
+
+  const onClickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.location.href = href;
+  };
+
+  return (
+    <a 
+      href={href} 
+      className={className || `font-medium ${isActive ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`} 
+      onClick={onClickHandler}
+    >
+      {children}
+    </a>
+  );
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,15 +52,15 @@ const Header = () => {
           <div className="text-sm hidden md:block">Shop 4, Avonlea Shopping Center, Greencroft Shops</div>
           <div className="flex items-center space-x-4">
             <div className="flex items-center">
-              <span className="text-secondary mr-2">📞</span>
+              <Phone size={16} className="text-secondary mr-2" />
               <span>0779 656 666</span>
             </div>
             <div className="flex space-x-2">
               <a href="#" className="text-white hover:text-secondary">
-                <i className="fab fa-facebook-f"></i>
+                <Facebook size={16} />
               </a>
               <a href="#" className="text-white hover:text-secondary">
-                <i className="fab fa-instagram"></i>
+                <Instagram size={16} />
               </a>
             </div>
           </div>
@@ -50,11 +71,13 @@ const Header = () => {
       <div className="container mx-auto py-4 px-4 md:px-0">
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Logo */}
-          <Link href="/">
-            <a className="mb-4 md:mb-0">
-              <MagwereLogo />
-            </a>
-          </Link>
+          <div className="mb-4 md:mb-0">
+            <Link href="/">
+              <div className="cursor-pointer">
+                <MagwereLogo />
+              </div>
+            </Link>
+          </div>
           
           {/* Search */}
           <div className="w-full md:w-1/2 lg:w-2/5 mb-4 md:mb-0">
@@ -79,17 +102,17 @@ const Header = () => {
           {/* Cart & Account */}
           <div className="flex items-center space-x-4">
             <Link href="/account">
-              <a className="flex items-center text-neutral-800 hover:text-primary">
+              <div className="flex items-center text-neutral-800 hover:text-primary cursor-pointer">
                 <User className="h-5 w-5 mr-1" />
                 <span className="hidden md:inline">Account</span>
-              </a>
+              </div>
             </Link>
             <Link href="/cart">
-              <a className="flex items-center text-neutral-800 hover:text-primary relative">
+              <div className="flex items-center text-neutral-800 hover:text-primary relative cursor-pointer">
                 <ShoppingCart className="h-5 w-5 mr-1" />
                 <span className="hidden md:inline">Cart</span>
                 <span className="absolute -top-2 -right-2 bg-secondary text-neutral-800 rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
-              </a>
+              </div>
             </Link>
           </div>
         </div>
@@ -101,35 +124,40 @@ const Header = () => {
           <div className="flex justify-between">
             <div className="hidden md:flex space-x-6 py-3">
               <Link href="/">
-                <a className={`font-medium ${location === '/' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
+                <div className={`font-medium cursor-pointer ${location === '/' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
                   Home
-                </a>
+                </div>
               </Link>
               
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center font-medium text-neutral-800 hover:text-primary">
                   Power Tools
-                  <i className="fas fa-chevron-down ml-1 text-xs"></i>
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/category/power-tools">
+                      <div className="w-full cursor-pointer">All Power Tools</div>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/power-tools/drills">
-                      <a className="w-full">Drills & Drivers</a>
+                      <div className="w-full cursor-pointer">Drills & Drivers</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/power-tools/saws">
-                      <a className="w-full">Saws</a>
+                      <div className="w-full cursor-pointer">Saws</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/power-tools/grinders">
-                      <a className="w-full">Grinders</a>
+                      <div className="w-full cursor-pointer">Grinders</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/power-tools/batteries">
-                      <a className="w-full">Batteries & Chargers</a>
+                      <div className="w-full cursor-pointer">Batteries & Chargers</div>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -138,27 +166,32 @@ const Header = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center font-medium text-neutral-800 hover:text-primary">
                   Solar Solutions
-                  <i className="fas fa-chevron-down ml-1 text-xs"></i>
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/category/solar-solutions">
+                      <div className="w-full cursor-pointer">All Solar Products</div>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/solar-solutions/panels">
-                      <a className="w-full">Solar Panels</a>
+                      <div className="w-full cursor-pointer">Solar Panels</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/solar-solutions/batteries">
-                      <a className="w-full">Batteries</a>
+                      <div className="w-full cursor-pointer">Batteries</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/solar-solutions/inverters">
-                      <a className="w-full">Inverters</a>
+                      <div className="w-full cursor-pointer">Inverters</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/solar-solutions/kits">
-                      <a className="w-full">Installation Kits</a>
+                      <div className="w-full cursor-pointer">Installation Kits</div>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -167,42 +200,47 @@ const Header = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center font-medium text-neutral-800 hover:text-primary">
                   Building & Construction
-                  <i className="fas fa-chevron-down ml-1 text-xs"></i>
+                  <ChevronDown className="ml-1 h-4 w-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/category/building">
+                      <div className="w-full cursor-pointer">All Building Products</div>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/building/adhesives">
-                      <a className="w-full">Adhesives</a>
+                      <div className="w-full cursor-pointer">Adhesives</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/building/tile-grout">
-                      <a className="w-full">Tile Grout</a>
+                      <div className="w-full cursor-pointer">Tile Grout</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link href="/category/building/plaster">
-                      <a className="w-full">Plaster</a>
+                      <div className="w-full cursor-pointer">Plaster</div>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href="/category/building/paints">
-                      <a className="w-full">Paints & Varnishes</a>
+                  <DropdownMenuItem asChild>
+                    <Link href="/category/paints">
+                      <div className="w-full cursor-pointer">Paints & Varnishes</div>
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               
               <Link href="/bulk-orders">
-                <a className={`font-medium ${location === '/bulk-orders' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
+                <div className={`font-medium cursor-pointer ${location === '/bulk-orders' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
                   Bulk Orders
-                </a>
+                </div>
               </Link>
               
               <Link href="/contact">
-                <a className={`font-medium ${location === '/contact' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
+                <div className={`font-medium cursor-pointer ${location === '/contact' ? 'text-primary' : 'text-neutral-800 hover:text-primary'}`}>
                   Contact
-                </a>
+                </div>
               </Link>
             </div>
             
@@ -211,12 +249,12 @@ const Header = () => {
               className="md:hidden py-3 text-neutral-800" 
               onClick={() => setIsMenuOpen(true)}
             >
-              <i className="fas fa-bars text-xl"></i>
+              <Menu className="h-6 w-6" />
             </Button>
             
             <div className="hidden md:block py-3">
               <Link href="/refer">
-                <a className="text-primary font-medium">Refer & Earn</a>
+                <div className="text-primary font-medium cursor-pointer">Refer & Earn</div>
               </Link>
             </div>
           </div>
