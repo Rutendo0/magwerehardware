@@ -19,7 +19,7 @@ const About: FC = () => {
         <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(#8A2BE2_0.5px,transparent_0.5px),radial-gradient(#8A2BE2_0.5px,#f3f4f6_0.5px)] bg-[length:20px_20px] bg-[position:0_0,10px_10px]"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">About Magware Hardware</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">About Magwere Hardware</h1>
             <p className="text-lg md:text-xl mb-8">
               Your trusted partner for quality hardware, building materials, and solar solutions since 2018.
             </p>
@@ -34,7 +34,7 @@ const About: FC = () => {
             <div>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-neutral-700 mb-4">
-                Magware Hardware was founded with a simple mission: to provide quality hardware products and exceptional service to our community. What started as a small shop has grown into a trusted supplier for professionals and DIY enthusiasts alike.
+                Magwere Hardware was founded with a simple mission: to provide quality hardware products and exceptional service to our community. What started as a small shop has grown into a trusted supplier for professionals and DIY enthusiasts alike.
               </p>
               <p className="text-neutral-700 mb-4">
                 With years of experience in the industry, we understand the needs of our customers and strive to offer a comprehensive range of products to meet those needs. From power tools to building materials and solar solutions, we are your one-stop shop for all your hardware requirements.
@@ -60,7 +60,7 @@ const About: FC = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Our Values</h2>
             <p className="text-neutral-600 max-w-3xl mx-auto">
-              At Magware Hardware, our values guide everything we do. They define how we interact with our customers, partners, and community.
+              At Magwere Hardware, our values guide everything we do. They define how we interact with our customers, partners, and community.
             </p>
           </div>
           
@@ -188,7 +188,7 @@ const About: FC = () => {
       <section className="py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Magware Hardware</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose Magwere Hardware</h2>
             <p className="text-neutral-600 max-w-3xl mx-auto">
               We strive to be your preferred hardware supplier by offering exceptional service, quality products, and competitive prices.
             </p>
