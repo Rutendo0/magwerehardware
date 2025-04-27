@@ -1,0 +1,357 @@
+import { 
+  products, type Product, type InsertProduct,
+  categories, type Category, type InsertCategory,
+  cartItems, type CartItem, type InsertCartItem,
+  contactMessages, type ContactMessage, type InsertContactMessage,
+  subscribers, type Subscriber, type InsertSubscriber
+} from "@shared/schema";
+
+export interface IStorage {
+  // Product operations
+  getAllProducts(): Promise<Product[]>;
+  getProductById(id: number): Promise<Product | undefined>;
+  getProductsByCategory(category: string): Promise<Product[]>;
+  getFeaturedProducts(limit?: number): Promise<Product[]>;
+  getOnSaleProducts(limit?: number): Promise<Product[]>;
+  createProduct(product: InsertProduct): Promise<Product>;
+  
+  // Category operations
+  getAllCategories(): Promise<Category[]>;
+  getCategoryBySlug(slug: string): Promise<Category | undefined>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  
+  // Cart operations
+  getCartItems(sessionId: string): Promise<CartItem[]>;
+  addToCart(cartItem: InsertCartItem): Promise<CartItem>;
+  updateCartItemQuantity(id: number, quantity: number): Promise<CartItem | undefined>;
+  removeFromCart(id: number): Promise<boolean>;
+  clearCart(sessionId: string): Promise<boolean>;
+  
+  // Contact message operations
+  createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
+  
+  // Newsletter operations
+  addSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
+}
+
+export class MemStorage implements IStorage {
+  private products: Map<number, Product>;
+  private categories: Map<number, Category>;
+  private cartItems: Map<number, CartItem>;
+  private contactMessages: Map<number, ContactMessage>;
+  private subscribers: Map<number, Subscriber>;
+  
+  private productId: number;
+  private categoryId: number;
+  private cartItemId: number;
+  private messageId: number;
+  private subscriberId: number;
+
+  constructor() {
+    this.products = new Map();
+    this.categories = new Map();
+    this.cartItems = new Map();
+    this.contactMessages = new Map();
+    this.subscribers = new Map();
+    
+    this.productId = 1;
+    this.categoryId = 1;
+    this.cartItemId = 1;
+    this.messageId = 1;
+    this.subscriberId = 1;
+    
+    // Initialize with some categories
+    this.initializeData();
+  }
+
+  private initializeData() {
+    // Add categories
+    const categories: InsertCategory[] = [
+      {
+        name: "Power Tools",
+        slug: "power-tools",
+        description: "Professional power tools for construction and DIY projects",
+        imageUrl: "https://images.unsplash.com/photo-1503480207415-fdddcc21d5fc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dG9vbHMlMjBhbmQlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 86
+      },
+      {
+        name: "Solar Solutions",
+        slug: "solar-solutions",
+        description: "Complete solar equipment and installation packages",
+        imageUrl: "https://images.unsplash.com/photo-1583355530139-d977df57be3b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29sYXIlMjBwYW5lbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 42
+      },
+      {
+        name: "Tiling Materials",
+        slug: "tiling-materials",
+        description: "Tile grout, adhesives and tools for professional tiling",
+        imageUrl: "https://images.unsplash.com/photo-1586864387789-628af9feed72?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGlsZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 38
+      },
+      {
+        name: "Paints & Finishes",
+        slug: "paints-finishes",
+        description: "Quality paints, varnishes and wood finishes",
+        imageUrl: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGFpbnQlMjBjYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 53
+      },
+      {
+        name: "Lighting",
+        slug: "lighting",
+        description: "Modern lighting solutions for homes and offices",
+        imageUrl: "https://images.unsplash.com/photo-1560170412-0f438cfc87a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2VpbGluZyUyMGxpZ2h0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 26
+      },
+      {
+        name: "Building Materials",
+        slug: "building-materials",
+        description: "Construction and building supplies",
+        imageUrl: "https://images.unsplash.com/photo-1572363411478-e9ecfd58024a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dGlsZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        productCount: 67
+      }
+    ];
+    
+    categories.forEach(category => this.createCategory(category));
+    
+    // Add products
+    const products: InsertProduct[] = [
+      {
+        name: "WADFOW 20V Cordless Drill Set",
+        description: "Professional cordless drill with 2 batteries and charger",
+        price: "180.00",
+        salePrice: "150.00",
+        imageUrl: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG93ZXIlMjBkcmlsbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Power Tools",
+        subCategory: "Drills & Drivers",
+        brand: "WADFOW",
+        inStock: true,
+        featured: true,
+        isOnSale: true
+      },
+      {
+        name: "Complete Solar System Package 2kW",
+        description: "Complete solar power system with panels, inverter and batteries",
+        price: "1200.00",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1592140027991-254e9e4b6df8?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29sYXIlMjBwYW5lbCUyMHNldHVwfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Solar Solutions",
+        subCategory: "Complete Systems",
+        brand: "SolarEdge",
+        inStock: true,
+        featured: true,
+        isOnSale: false
+      },
+      {
+        name: "MAG-GRIP Tile Grout Fast Set 5kg",
+        description: "Quick-setting tile grout for interior and exterior use",
+        price: "18.50",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1590534460252-75feed569388?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dGlsZSUyMGdyb3V0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Tiling Materials",
+        subCategory: "Grouts",
+        brand: "MAG-GRIP",
+        inStock: true,
+        featured: true,
+        isOnSale: false
+      },
+      {
+        name: "WADFOW Gasoline Grass Trimmer 62cc",
+        description: "Powerful gas trimmer for professional landscaping",
+        price: "180.00",
+        salePrice: "150.00",
+        imageUrl: "https://images.unsplash.com/photo-1620267986526-d18495e276e0?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z3Jhc3MlMjB0cmltbWVyfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Power Tools",
+        subCategory: "Garden Tools",
+        brand: "WADFOW",
+        inStock: true,
+        featured: true,
+        isOnSale: true
+      },
+      {
+        name: "Splash Wood Varnish Glossy Finish",
+        description: "Weather-resistant wood varnish for interior and exterior use",
+        price: "28.50",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1512236077335-f1cda9239c11?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d29vZCUyMHZhcm5pc2h8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Paints & Finishes",
+        subCategory: "Varnishes",
+        brand: "Splash",
+        inStock: true,
+        featured: false,
+        isOnSale: true
+      },
+      {
+        name: "Modern Ceiling Lights Collection",
+        description: "Contemporary LED ceiling lights for any room",
+        price: "45.00",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1560170412-0f438cfc87a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2VpbGluZyUyMGxpZ2h0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Lighting",
+        subCategory: "Ceiling Lights",
+        brand: "MAGWARE",
+        inStock: true,
+        featured: false,
+        isOnSale: false
+      },
+      {
+        name: "MAG-GRIP Epoxy Grout",
+        description: "High-strength epoxy grout for porcelain and ceramic paving",
+        price: "22.99",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1637614532878-32a7b14bad5b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8ZXBveHklMjBncm91dHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Tiling Materials",
+        subCategory: "Grouts",
+        brand: "MAG-GRIP",
+        inStock: true,
+        featured: false,
+        isOnSale: false
+      },
+      {
+        name: "Rhi-Lite Ceiling Plaster 20kg",
+        description: "Gypsum-based plaster for ceiling applications",
+        price: "19.99",
+        salePrice: null,
+        imageUrl: "https://images.unsplash.com/photo-1581165825571-4d11aae95f1d?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dGlsZXJ8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        category: "Building Materials",
+        subCategory: "Plasters",
+        brand: "Rhi-Lite",
+        inStock: true,
+        featured: false,
+        isOnSale: false
+      }
+    ];
+    
+    products.forEach(product => this.createProduct(product));
+  }
+
+  // Product operations
+  async getAllProducts(): Promise<Product[]> {
+    return Array.from(this.products.values());
+  }
+
+  async getProductById(id: number): Promise<Product | undefined> {
+    return this.products.get(id);
+  }
+
+  async getProductsByCategory(category: string): Promise<Product[]> {
+    return Array.from(this.products.values()).filter(
+      product => product.category === category
+    );
+  }
+
+  async getFeaturedProducts(limit?: number): Promise<Product[]> {
+    const featuredProducts = Array.from(this.products.values()).filter(
+      product => product.featured
+    );
+    
+    return limit ? featuredProducts.slice(0, limit) : featuredProducts;
+  }
+
+  async getOnSaleProducts(limit?: number): Promise<Product[]> {
+    const onSaleProducts = Array.from(this.products.values()).filter(
+      product => product.isOnSale
+    );
+    
+    return limit ? onSaleProducts.slice(0, limit) : onSaleProducts;
+  }
+
+  async createProduct(product: InsertProduct): Promise<Product> {
+    const id = this.productId++;
+    const newProduct: Product = { ...product, id };
+    this.products.set(id, newProduct);
+    return newProduct;
+  }
+
+  // Category operations
+  async getAllCategories(): Promise<Category[]> {
+    return Array.from(this.categories.values());
+  }
+
+  async getCategoryBySlug(slug: string): Promise<Category | undefined> {
+    return Array.from(this.categories.values()).find(
+      category => category.slug === slug
+    );
+  }
+
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const id = this.categoryId++;
+    const newCategory: Category = { ...category, id };
+    this.categories.set(id, newCategory);
+    return newCategory;
+  }
+
+  // Cart operations
+  async getCartItems(sessionId: string): Promise<CartItem[]> {
+    return Array.from(this.cartItems.values()).filter(
+      item => item.sessionId === sessionId
+    );
+  }
+
+  async addToCart(cartItem: InsertCartItem): Promise<CartItem> {
+    const id = this.cartItemId++;
+    const newCartItem: CartItem = { 
+      ...cartItem, 
+      id, 
+      addedAt: new Date() 
+    };
+    this.cartItems.set(id, newCartItem);
+    return newCartItem;
+  }
+
+  async updateCartItemQuantity(id: number, quantity: number): Promise<CartItem | undefined> {
+    const cartItem = this.cartItems.get(id);
+    if (!cartItem) return undefined;
+    
+    const updatedItem: CartItem = { ...cartItem, quantity };
+    this.cartItems.set(id, updatedItem);
+    return updatedItem;
+  }
+
+  async removeFromCart(id: number): Promise<boolean> {
+    return this.cartItems.delete(id);
+  }
+
+  async clearCart(sessionId: string): Promise<boolean> {
+    const cartItemsToRemove = Array.from(this.cartItems.values())
+      .filter(item => item.sessionId === sessionId)
+      .map(item => item.id);
+    
+    cartItemsToRemove.forEach(id => this.cartItems.delete(id));
+    return true;
+  }
+
+  // Contact message operations
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const id = this.messageId++;
+    const newMessage: ContactMessage = { 
+      ...message, 
+      id, 
+      createdAt: new Date() 
+    };
+    this.contactMessages.set(id, newMessage);
+    return newMessage;
+  }
+
+  // Newsletter operations
+  async addSubscriber(subscriber: InsertSubscriber): Promise<Subscriber> {
+    // Check if email already exists
+    const existingSubscriber = Array.from(this.subscribers.values()).find(
+      sub => sub.email === subscriber.email
+    );
+    
+    if (existingSubscriber) {
+      return existingSubscriber;
+    }
+    
+    const id = this.subscriberId++;
+    const newSubscriber: Subscriber = { 
+      ...subscriber, 
+      id, 
+      subscribedAt: new Date() 
+    };
+    this.subscribers.set(id, newSubscriber);
+    return newSubscriber;
+  }
+}
+
+export const storage = new MemStorage();
