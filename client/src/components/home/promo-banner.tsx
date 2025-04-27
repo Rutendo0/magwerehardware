@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { ArrowRight } from 'lucide-react';
 
 interface PromoBannerProps {
@@ -11,6 +11,12 @@ const PromoBanner: FC<PromoBannerProps> = ({
   promoText = "Special deals on all tools",
   endDate = "December 2nd"
 }) => {
+  const [_, navigate] = useLocation();
+
+  const handleNavigate = () => {
+    navigate('/products');
+  };
+
   return (
     <section className="bg-black py-3">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
@@ -20,12 +26,13 @@ const PromoBanner: FC<PromoBannerProps> = ({
           </div>
           <p className="text-white">{promoText} until {endDate}</p>
         </div>
-        <Link href="/special-offers">
-          <a className="text-white hover:text-secondary flex items-center">
-            <span>View All Deals</span>
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </a>
-        </Link>
+        <div 
+          onClick={handleNavigate}
+          className="text-white hover:text-secondary flex items-center cursor-pointer"
+        >
+          <span>View All Deals</span>
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </div>
       </div>
     </section>
   );

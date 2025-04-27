@@ -1,10 +1,20 @@
 import { FC } from 'react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import solarImage from '@assets/IMG-20250419-WA0016.jpg';
 
 const SolarSolutionsBanner: FC = () => {
+  const [_, navigate] = useLocation();
+
+  const handleViewSolarProducts = () => {
+    navigate('/category/solar-solutions');
+  };
+
+  const handleGetQuote = () => {
+    navigate('/contact');
+  };
+
   return (
     <section 
       className="py-16 relative bg-gradient-to-r from-blue-900 to-blue-800 text-white overflow-hidden"
@@ -80,16 +90,19 @@ const SolarSolutionsBanner: FC = () => {
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/category/solar-solutions">
-                <Button className="bg-yellow-400 text-blue-900 hover:bg-yellow-300">
-                  View Solar Products
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="outline" className="border-white text-white hover:bg-white/10">
-                  Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                onClick={handleViewSolarProducts}
+                className="bg-yellow-400 text-blue-900 hover:bg-yellow-300"
+              >
+                View Solar Products
+              </Button>
+              <Button 
+                onClick={handleGetQuote}
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10"
+              >
+                Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
           

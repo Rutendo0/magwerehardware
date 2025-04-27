@@ -1,8 +1,18 @@
 import { FC } from 'react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 
 const HeroBanner: FC = () => {
+  const [_, navigate] = useLocation();
+
+  const handleShopNow = () => {
+    navigate('/products');
+  };
+
+  const handleSpecialOffers = () => {
+    navigate('/products');
+  };
+
   return (
     <section className="relative">
       <div className="relative">
@@ -20,21 +30,19 @@ const HeroBanner: FC = () => {
               Quality tools, building materials, and solar solutions for professionals and DIY enthusiasts.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/products">
-                <Button 
-                  className="bg-secondary text-black hover:bg-secondary/80 font-medium py-3 px-8 rounded-lg"
-                >
-                  Shop Now
-                </Button>
-              </Link>
-              <Link href="/special-offers">
-                <Button 
-                  variant="outline" 
-                  className="bg-white text-primary hover:bg-gray-100 font-medium py-3 px-8 rounded-lg"
-                >
-                  Special Offers
-                </Button>
-              </Link>
+              <Button 
+                onClick={handleShopNow}
+                className="bg-secondary text-black hover:bg-secondary/80 font-medium py-3 px-8 rounded-lg"
+              >
+                Shop Now
+              </Button>
+              <Button 
+                onClick={handleSpecialOffers}
+                variant="outline" 
+                className="bg-white text-primary hover:bg-gray-100 font-medium py-3 px-8 rounded-lg"
+              >
+                Special Offers
+              </Button>
             </div>
           </div>
         </div>

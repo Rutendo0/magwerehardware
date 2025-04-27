@@ -1,4 +1,4 @@
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import MagwereLogo from '@/lib/magwere-logo';
 import { Button } from '@/components/ui/button';
 import { 
@@ -11,6 +11,12 @@ import {
 } from 'lucide-react';
 
 const Footer = () => {
+  const [_, navigate] = useLocation();
+
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <footer className="bg-neutral-900 text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
@@ -37,29 +43,44 @@ const Footer = () => {
             <h4 className="text-lg font-medium mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/">
-                  <a className="text-gray-400 hover:text-white">Home</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Home
+                </span>
               </li>
               <li>
-                <Link href="/products">
-                  <a className="text-gray-400 hover:text-white">Products</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/products')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Products
+                </span>
               </li>
               <li>
-                <Link href="/special-offers">
-                  <a className="text-gray-400 hover:text-white">Special Offers</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/products')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Special Offers
+                </span>
               </li>
               <li>
-                <Link href="/about">
-                  <a className="text-gray-400 hover:text-white">About Us</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/about')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  About Us
+                </span>
               </li>
               <li>
-                <Link href="/contact">
-                  <a className="text-gray-400 hover:text-white">Contact</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/contact')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Contact
+                </span>
               </li>
             </ul>
           </div>
@@ -68,29 +89,44 @@ const Footer = () => {
             <h4 className="text-lg font-medium mb-4">Categories</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/category/power-tools">
-                  <a className="text-gray-400 hover:text-white">Power Tools</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/category/power-tools')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Power Tools
+                </span>
               </li>
               <li>
-                <Link href="/category/solar-solutions">
-                  <a className="text-gray-400 hover:text-white">Solar Solutions</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/category/solar-solutions')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Solar Solutions
+                </span>
               </li>
               <li>
-                <Link href="/category/building-materials">
-                  <a className="text-gray-400 hover:text-white">Building Materials</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/category/building')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Building Materials
+                </span>
               </li>
               <li>
-                <Link href="/category/plumbing">
-                  <a className="text-gray-400 hover:text-white">Plumbing Supplies</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/category/plumbing')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Plumbing Supplies
+                </span>
               </li>
               <li>
-                <Link href="/category/paints">
-                  <a className="text-gray-400 hover:text-white">Paints & Finishes</a>
-                </Link>
+                <span 
+                  onClick={() => handleNavigate('/category/paints')}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                >
+                  Paints & Finishes
+                </span>
               </li>
             </ul>
           </div>
@@ -120,15 +156,24 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm mb-4 md:mb-0">&copy; {new Date().getFullYear()} Magwere Hardware. All rights reserved.</p>
             <div className="flex space-x-4 text-sm text-gray-500">
-              <Link href="/privacy">
-                <a className="hover:text-gray-400">Privacy Policy</a>
-              </Link>
-              <Link href="/terms">
-                <a className="hover:text-gray-400">Terms of Service</a>
-              </Link>
-              <Link href="/refund">
-                <a className="hover:text-gray-400">Refund Policy</a>
-              </Link>
+              <span 
+                onClick={() => handleNavigate('/about')}
+                className="hover:text-gray-400 cursor-pointer"
+              >
+                Privacy Policy
+              </span>
+              <span 
+                onClick={() => handleNavigate('/about')}
+                className="hover:text-gray-400 cursor-pointer"
+              >
+                Terms of Service
+              </span>
+              <span 
+                onClick={() => handleNavigate('/about')}
+                className="hover:text-gray-400 cursor-pointer"
+              >
+                Refund Policy
+              </span>
             </div>
           </div>
         </div>
