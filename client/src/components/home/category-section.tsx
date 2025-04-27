@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -11,15 +11,6 @@ import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
 import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
 import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
 import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
-
-const categoryImages = {
-  'Solar Equipment': solarImage,
-  'Tile Grout': tileGroutImage,
-  'Epoxy Grout': epoxyGroutImage,
-  'Ceiling Plaster': ceilingPlasterImage,
-  'Wood Varnish': woodVarnishImage,
-  // Add more mappings as needed
-};
 
 interface EnhancedCategoryProps {
   title: string;
@@ -36,8 +27,17 @@ const EnhancedCategoryCard: FC<EnhancedCategoryProps> = ({
   href,
   featured = false 
 }) => {
+  const [_, navigate] = useLocation();
+
+  const handleNavigate = () => {
+    navigate(href);
+  };
+
   return (
-    <div className={`group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
+    <div 
+      onClick={handleNavigate}
+      className={`group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''} cursor-pointer`}
+    >
       <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/70 z-10`}></div>
       <img 
         src={image} 
@@ -48,17 +48,22 @@ const EnhancedCategoryCard: FC<EnhancedCategoryProps> = ({
       <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform transition-transform duration-300">
         <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{title}</h3>
         <p className="text-white/80 mb-4 max-w-xs">{description}</p>
-        <Link href={href}>
-          <Button className="bg-white text-primary hover:bg-gray-100 hover:text-primary-dark group-hover:translate-x-2 transition-transform">
-            Shop Now <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
+        <Button 
+          className="bg-white text-primary hover:bg-gray-100 hover:text-primary-dark group-hover:translate-x-2 transition-transform"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(href);
+          }}
+        >
+          Shop Now <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
 };
 
 const CategorySection: FC = () => {
+  const [_, navigate] = useLocation();
   const { data: categories, isLoading, error } = useQuery<Category[]>({
     queryKey: ['/api/categories'],
   });
@@ -113,7 +118,7 @@ const CategorySection: FC = () => {
       title: "Epoxy Grout",
       description: "Revolutionary epoxy grout that peels right off with a blade, no messy clean-up",
       image: epoxyGroutImage,
-      href: "/category/building/epoxy-grout"
+      href: "/category/building/adhesives"
     },
     {
       title: "Ceiling Plaster",
@@ -153,11 +158,13 @@ const CategorySection: FC = () => {
         </div>
         
         <div className="text-center mt-10">
-          <Link href="/categories">
-            <Button variant="outline" className="mt-4 group">
-              View All Categories <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
+          <Button 
+            variant="outline" 
+            className="mt-4 group"
+            onClick={() => navigate('/categories')}
+          >
+            View All Categories <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
         </div>
       </div>
     </section>

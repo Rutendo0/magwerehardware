@@ -1,11 +1,17 @@
 import { FC } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
 import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
 
 const TilingSolutions: FC = () => {
+  const [_, navigate] = useLocation();
+
+  const navigateTo = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -16,11 +22,13 @@ const TilingSolutions: FC = () => {
               Find all your tiling needs from adhesives to grouts and tools. Professional quality for beautiful results.
             </p>
           </div>
-          <Link href="/category/tiling">
-            <Button variant="outline" className="mt-4 md:mt-0">
-              View All Tiling Products <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
+          <Button 
+            variant="outline" 
+            className="mt-4 md:mt-0"
+            onClick={() => navigateTo('/category/building')}
+          >
+            View All Tiling Products <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -59,11 +67,12 @@ const TilingSolutions: FC = () => {
                   <span>Low dust formulation</span>
                 </li>
               </ul>
-              <Link href="/category/tiling/grouts">
-                <Button className="w-full">
-                  Shop Tile Grout <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                className="w-full"
+                onClick={() => navigateTo('/category/building/tile-grout')}
+              >
+                Shop Tile Grout <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
           
@@ -102,11 +111,12 @@ const TilingSolutions: FC = () => {
                   <span>Multiple colors available</span>
                 </li>
               </ul>
-              <Link href="/category/tiling/epoxy-grout">
-                <Button className="w-full">
-                  Shop Epoxy Grout <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                className="w-full"
+                onClick={() => navigateTo('/category/building/adhesives')}
+              >
+                Shop Epoxy Grout <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
           
@@ -151,11 +161,12 @@ const TilingSolutions: FC = () => {
                 <span className="text-lg font-bold text-primary">$49.99</span>
                 <span className="text-sm line-through text-gray-400">$64.99</span>
               </div>
-              <Link href="/category/tiling/kits">
-                <Button className="w-full">
-                  Shop Tiling Kits <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button 
+                className="w-full"
+                onClick={() => navigateTo('/category/building')}
+              >
+                Shop Tiling Kits <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>

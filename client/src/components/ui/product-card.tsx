@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Link } from 'wouter';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Star, StarHalf } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -15,6 +15,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const [_, navigate] = useLocation();
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
@@ -42,10 +43,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   });
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     setIsAddingToCart(true);
     addToCartMutation.mutate();
+  };
+
+  const handleNavigateToProduct = () => {
+    navigate(`/product/${product.id}`);
   };
 
   // Helper function to render star ratings
@@ -71,49 +75,50 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <Link href={`/product/${product.id}`}>
-      <a className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg block h-full">
-        <div className="relative">
-          <img 
-            src={product.imageUrl} 
-            alt={product.name} 
-            className="w-full h-64 object-contain p-4"
-          />
-          {product.isOnSale && (
-            <div className="absolute top-4 left-4">
-              <span className="bg-secondary text-black text-xs font-bold py-1 px-2 rounded">SALE</span>
-            </div>
-          )}
-        </div>
-        <div className="p-4 border-t">
-          <h3 className="font-medium text-lg mb-2">{product.name}</h3>
-          <div className="flex items-center mb-2">
-            <div className="flex text-yellow-400">
-              {renderStars()}
-            </div>
-            <span className="text-sm text-neutral-500 ml-2">(24)</span>
+    <div 
+      onClick={handleNavigateToProduct}
+      className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg block h-full cursor-pointer"
+    >
+      <div className="relative">
+        <img 
+          src={product.imageUrl} 
+          alt={product.name} 
+          className="w-full h-64 object-contain p-4"
+        />
+        {product.isOnSale && (
+          <div className="absolute top-4 left-4">
+            <span className="bg-secondary text-black text-xs font-bold py-1 px-2 rounded">SALE</span>
           </div>
-          <div className="flex items-end justify-between mt-3">
-            <div>
-              {product.salePrice && (
-                <span className="text-neutral-500 line-through text-sm">${Number(product.price).toFixed(2)}</span>
-              )}
-              <div className="text-xl font-bold text-primary">
-                ${Number(product.salePrice || product.price).toFixed(2)}
-              </div>
-            </div>
-            <Button 
-              className="flex items-center"
-              onClick={handleAddToCart}
-              disabled={isAddingToCart}
-            >
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              <span>Add</span>
-            </Button>
+        )}
+      </div>
+      <div className="p-4 border-t">
+        <h3 className="font-medium text-lg mb-2">{product.name}</h3>
+        <div className="flex items-center mb-2">
+          <div className="flex text-yellow-400">
+            {renderStars()}
           </div>
+          <span className="text-sm text-neutral-500 ml-2">(24)</span>
         </div>
-      </a>
-    </Link>
+        <div className="flex items-end justify-between mt-3">
+          <div>
+            {product.salePrice && (
+              <span className="text-neutral-500 line-through text-sm">${Number(product.price).toFixed(2)}</span>
+            )}
+            <div className="text-xl font-bold text-primary">
+              ${Number(product.salePrice || product.price).toFixed(2)}
+            </div>
+          </div>
+          <Button 
+            className="flex items-center z-10"
+            onClick={handleAddToCart}
+            disabled={isAddingToCart}
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            <span>Add</span>
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 
