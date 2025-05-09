@@ -45,7 +45,7 @@ const About: FC = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img 
-                src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                src="https://www.wallsforms.com/wp-content/uploads/2017/10/IMG_4465-1030x773.jpg" 
                 alt="Hardware store interior" 
                 className="w-full h-auto"
               />

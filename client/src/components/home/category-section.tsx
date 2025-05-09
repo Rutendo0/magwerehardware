@@ -20,47 +20,16 @@ interface EnhancedCategoryProps {
   featured?: boolean;
 }
 
-const EnhancedCategoryCard: FC<EnhancedCategoryProps> = ({ 
-  title, 
-  description,
-  image, 
-  href,
-  featured = false 
-}) => {
-  const [_, navigate] = useLocation();
-
-  const handleNavigate = () => {
-    navigate(href);
-  };
-
-  return (
-    <div 
-      onClick={handleNavigate}
-      className={`group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''} cursor-pointer`}
-    >
-      <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/70 z-10`}></div>
-      <img 
-        src={image} 
-        alt={title}
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-        style={{ height: featured ? '100%' : '250px' }}
-      />
-      <div className="absolute bottom-0 left-0 right-0 p-6 z-20 transform transition-transform duration-300">
-        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-white/80 mb-4 max-w-xs">{description}</p>
-        <Button 
-          className="bg-white text-primary hover:bg-gray-100 hover:text-primary-dark group-hover:translate-x-2 transition-transform"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(href);
-          }}
-        >
-          Shop Now <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
+const CategoryCard: FC<EnhancedCategoryProps> = ({ title, description, image, href, featured }) => (
+  <div className={`bg-white rounded-xl shadow-md overflow-hidden transition duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
+    <img src={image} alt={title} className={`${featured ? 'h-96' : 'h-64'} w-full object-cover`} />
+    <div className="p-6">
+      <h3 className="text-xl font-bold mb-2">{title}</h3>
+      <p className="text-neutral-600 mb-4">{description}</p>
+      <a href={href} className="text-blue-500 hover:underline">Discover</a>
     </div>
-  );
-};
+  </div>
+);
 
 const CategorySection: FC = () => {
   const [_, navigate] = useLocation();
@@ -76,7 +45,6 @@ const CategorySection: FC = () => {
             <h2 className="text-3xl font-bold mb-4">Shop By Category</h2>
             <p className="text-neutral-600 max-w-2xl mx-auto">Find everything you need for your next project</p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {Array(5).fill(0).map((_, i) => (
               <div key={i} className={`bg-white rounded-xl shadow-md overflow-hidden transition duration-300 ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
@@ -96,10 +64,9 @@ const CategorySection: FC = () => {
 
   if (error) {
     console.error("Error loading categories:", error);
-    return <div>Error loading categories. Please try again later.</div>;
+    return <div className="text-center py-16">Error loading categories. Please try again later.</div>;
   }
 
-  // Enhanced category items with proper descriptions
   const enhancedCategories: EnhancedCategoryProps[] = [
     {
       title: "Solar Solutions",
@@ -135,18 +102,16 @@ const CategorySection: FC = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-neutral-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-heading font-bold mb-4">Shop By Category</h2>
-          <p className="text-neutral-600 max-w-2xl mx-auto">
-            Explore our wide range of high-quality products for all your construction and hardware needs
-          </p>
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold mb-4">Shop By Category</h2>
+          <p className="text-neutral-600 max-w-2xl mx-auto">Find everything you need for your next project</p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {enhancedCategories.map((category, index) => (
-            <EnhancedCategoryCard 
+            <CategoryCard
               key={index}
               title={category.title}
               description={category.description}
@@ -156,14 +121,15 @@ const CategorySection: FC = () => {
             />
           ))}
         </div>
-        
+
         <div className="text-center mt-10">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="mt-4 group"
             onClick={() => navigate('/categories')}
           >
-            View All Categories <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            View All Categories
+            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
       </div>
@@ -172,3 +138,4 @@ const CategorySection: FC = () => {
 };
 
 export default CategorySection;
+

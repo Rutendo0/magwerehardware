@@ -7,7 +7,7 @@ import { Product } from '@shared/schema';
 
 const FeaturedProducts: FC = () => {
   const { data: products, isLoading, error } = useQuery<Product[]>({
-    queryKey: ['/api/products/featured/4'],
+    queryKey: ['/api/products'],
   });
 
   const [currentPage, setCurrentPage] = useState(0);

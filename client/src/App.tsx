@@ -13,6 +13,8 @@ import Contact from "./pages/contact";
 import About from "./pages/about";
 import Account from "./pages/account";
 import NotFound from "@/pages/not-found";
+import BulkOrders from "./pages/bulk-orders";
+import CategoriesPage from './pages/categories';
 
 function Router() {
   return (
@@ -26,9 +28,10 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/about" component={About} />
       <Route path="/account" component={Account} />
-      <Route path="/bulk-orders" component={Contact} />
+      <Route path="/bulk-orders" component={BulkOrders} />
       <Route path="/refer" component={Account} />
       <Route path="/categories" component={ProductCategory} />
+      <Route path="/categories" component={CategoriesPage} />
       <Route component={NotFound} />
     </Switch>
   );

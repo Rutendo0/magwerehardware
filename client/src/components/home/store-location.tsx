@@ -1,8 +1,35 @@
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Phone } from 'lucide-react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const StoreLocation: FC = () => {
+  // Store location coordinates (latitude and longitude)
+  const storeLocation = {
+    lat: -17.824858,
+    lng: 31.053028
+  };
+
+  // Use a hardcoded API key or ensure it's properly passed to the client
+  // In a real app, this should come from your environment variables
+  // and be exposed to the client via NEXT_PUBLIC_ prefix or similar
+  const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your actual key
+
+  // Handle the "Get Directions" button click
+  const handleGetDirections = () => {
+    // Open Google Maps with directions to the store
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${storeLocation.lat},${storeLocation.lng}`,
+      '_blank'
+    );
+  };
+
+  // Map container style
+  const mapContainerStyle = {
+    width: '100%',
+    height: '100%'
+  };
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -16,10 +43,21 @@ const StoreLocation: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <div className="bg-gray-200 rounded-lg h-96 overflow-hidden">
-              {/* This would be replaced with an actual Google Map in production */}
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-500">Google Map would be displayed here</span>
-              </div>
+              {apiKey ? (
+                <LoadScript googleMapsApiKey={apiKey}>
+                  <GoogleMap
+                    mapContainerStyle={mapContainerStyle}
+                    center={storeLocation}
+                    zoom={15}
+                  >
+                    <Marker position={storeLocation} />
+                  </GoogleMap>
+                </LoadScript>
+              ) : (
+                <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                  <span className="text-gray-500">Map loading failed - API key missing</span>
+                </div>
+              )}
             </div>
           </div>
           
@@ -71,7 +109,10 @@ const StoreLocation: FC = () => {
               </div>
               
               <div className="mt-8">
-                <Button className="bg-primary hover:bg-primary-700">
+                <Button 
+                  className="bg-primary hover:bg-primary-700"
+                  onClick={handleGetDirections}
+                >
                   Get Directions
                 </Button>
               </div>

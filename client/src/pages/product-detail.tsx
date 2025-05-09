@@ -62,7 +62,7 @@ const ProductDetail: FC = () => {
   });
   
   const { data: relatedProducts, isLoading: relatedLoading } = useQuery<Product[]>({
-    queryKey: ['/api/products/featured/4'],
+    queryKey: ['/api/products'],
     enabled: !!product,
   });
   
@@ -509,9 +509,9 @@ const ProductDetail: FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {relatedProducts?.filter(p => p.id !== product.id).slice(0, 4).map(product => (
+            {relatedProducts?.filter(p => p.id !== product.id).map(product => (
               <ProductCard key={product.id} product={product} />
-            ))}
+              ))}
           </div>
         )}
       </div>

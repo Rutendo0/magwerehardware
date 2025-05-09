@@ -36,7 +36,7 @@ import {
 import solarImage from '@assets/IMG-20250419-WA0016.jpg';
 import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
 import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
-import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
+import buidingmaterials from '@assets/IMG-20250419-WA0019.jpg';
 import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
 import ceilingLightsImage from '@assets/IMG-20250419-WA0009.jpg';
 import powerToolsImage from '@assets/IMG-20250419-WA0019.jpg';
@@ -45,11 +45,9 @@ import powerToolsImage from '@assets/IMG-20250419-WA0019.jpg';
 const categoryImageMap: Record<string, string> = {
   'power-tools': powerToolsImage,
   'solar-solutions': solarImage,
-  'building': tileGroutImage,
-  'tile-grout': tileGroutImage,
-  'adhesives': epoxyGroutImage,
-  'plaster': ceilingPlasterImage,
-  'paints': woodVarnishImage,
+  'tiling-materials': tileGroutImage,
+  'building-materials': tileGroutImage,
+  'paints-finishes': woodVarnishImage,
   'lighting': ceilingLightsImage,
 };
 
