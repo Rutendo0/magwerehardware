@@ -2,12 +2,20 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import path from "path";
+import { fileURLToPath } from 'url'; // ADD THIS for ESM __dirname fix
+
+const __filename = fileURLToPath(import.meta.url); // <-- Add this
+const __dirname = path.dirname(__filename);
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 const isProduction = process.env.NODE_ENV === 'production';
 
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Request Logger Middleware
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -41,6 +49,7 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
+  // Error handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
@@ -49,31 +58,30 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
+  if (!isProduction) {
+    // In development mode: setup Vite
     await setupVite(app, server);
   } else {
-    serveStatic(app);
-  }
-
-
-  if (isProduction) {
+    // In production mode:
+    // 1. Serve static frontend
     app.use(express.static(path.join(__dirname, 'client')));
+
+    // 2. Serve index.html for SPA routing
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, 'client', 'index.html'));
     });
+
+    // 3. Also serve static backend files
+    serveStatic(app);
   }
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
+
+  // Start server
   const port = 5000;
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
-    log(`serving on port ${port}`);
+    log(`Serving on port ${port}`);
   });
 })();
