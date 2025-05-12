@@ -62,7 +62,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </div>
         <div className="mt-auto">
           <div className="text-xl font-bold text-primary mb-3">
-            ${product.price.toFixed(2)}
+            ${Number(product.price).toFixed(2)}
           </div>
           <Button 
             onClick={handleAddToCart}
