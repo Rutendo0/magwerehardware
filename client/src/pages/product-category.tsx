@@ -11,7 +11,10 @@ const ProductCategory: FC = () => {
     queryFn: async () => {
       const response = await apiRequest('GET', '/api/products');
       const data = await response.json();
-      return Array.isArray(data) ? data : [];
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid products data');
+      }
+      return data;
     }
   });
 

@@ -19,11 +19,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest('POST', '/api/cart', {
+      await apiRequest('POST', '/api/cart', {
         productId: product.id,
         quantity: 1
       });
-      return response.json();
     },
     onSuccess: () => {
       setIsAddingToCart(false);
@@ -82,9 +81,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     >
       <div className="relative">
         <img 
-          src={product.imageUrl} 
+          src={product.imageUrl || '/placeholder.jpg'} 
           alt={product.name} 
           className="w-full h-64 object-contain p-4"
+          onError={(e) => {
+            e.currentTarget.src = '/placeholder.jpg';
+          }}
         />
         {product.isOnSale && (
           <div className="absolute top-4 left-4">
