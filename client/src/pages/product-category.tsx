@@ -642,8 +642,36 @@ const ProductCategory: FC = () => {
         
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-6">
+            {/* Filters Sidebar - Desktop */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <div className="bg-white p-5 rounded-lg shadow-sm sticky top-6">
+                <h3 className="font-bold text-lg mb-4 border-b pb-2">Filters</h3>
+                {/* Add your filter components here */}
+              </div>
+            </div>
+            
             {/* Main Content Area */}
             <div className="flex-1">
+              <div className="bg-white p-4 rounded-lg shadow-sm mb-6">
+                <div className="flex justify-between items-center">
+                  <p className="text-neutral-600 text-sm">
+                    Showing <span className="font-medium">{sortedProducts.length}</span> products
+                  </p>
+                  <Select value={sortOption} onValueChange={setSortOption}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="featured">Featured</SelectItem>
+                      <SelectItem value="price-low">Price: Low to High</SelectItem>
+                      <SelectItem value="price-high">Price: High to Low</SelectItem>
+                      <SelectItem value="name-asc">Name: A to Z</SelectItem>
+                      <SelectItem value="name-desc">Name: Z to A</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
               <div className={`${viewMode === 'list' ? 'flex flex-col space-y-6' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'}`}>
                 {productsLoading ? (
                   Array(9).fill(0).map((_, index) => (
@@ -673,8 +701,6 @@ const ProductCategory: FC = () => {
                     <Button onClick={() => navigate('/')}>Return to Home</Button>
                   </div>
                 )}
-                {productsLoading ? (
-                  Array(9).fill(0).map((_, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                       <div className="h-64 bg-gray-200"></div>
                       <div className="p-4">
