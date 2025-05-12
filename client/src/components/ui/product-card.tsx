@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
@@ -62,7 +62,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </div>
         <div className="mt-auto">
           <div className="text-xl font-bold text-primary mb-3">
-            ${Number(product.price).toFixed(2)}
+            ${typeof product.price === 'string' ? parseFloat(product.price).toFixed(2) : (product.price || 0).toFixed(2)}
           </div>
           <Button 
             onClick={handleAddToCart}
