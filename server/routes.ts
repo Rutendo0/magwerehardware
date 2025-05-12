@@ -88,19 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get category by slug
-  router.get("/products/category/:category", async (req, res) => {
-    const { category } = req.params;
-    try {
-      const products = await storage.getProductsByCategory(category);
-      if (!products || products.length === 0) {
-        return res.status(404).json({ message: "No products found in this category" });
-      }
-      res.json(products);
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching products" });
-    }
-  });
+  
 
   // Cart operations
 // Get session ID from cookie or create new one

@@ -26,7 +26,7 @@ const CategoriesPage: FC = () => {
 
   const getCategoryImage = (slug: string) => {
     const imageMap: Record<string, string> = {
-      'power-tools': solarImage,
+      'solar-solutions': solarImage,
       'building-materials': tileGroutImage,
       'lighting': ceilingPlasterImage,
       'paints': woodVarnishImage,
