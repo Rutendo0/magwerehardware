@@ -11,16 +11,14 @@ const ProductCategory: FC = () => {
   const { data: products, isLoading, error } = useQuery<Product[]>({
     queryKey: ['products', slug],
     queryFn: async () => {
-      const endpoint = slug ? `/api/products/category/${slug}` : '/api/products';
-      const response = await fetch(endpoint);
+      const response = await fetch(`/api/products/category/${slug}`);
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to fetch products');
       }
-      const data = await response.json();
-      return data;
+      return response.json();
     },
-    enabled: true
+    enabled: !!slug
   });
 
   if (isLoading) {

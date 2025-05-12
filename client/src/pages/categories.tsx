@@ -6,11 +6,34 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
+// Import category images
+import solarImage from '@assets/IMG-20250419-WA0016.jpg';
+import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
+import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
+import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
+import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
+
 const CategoriesPage: FC = () => {
   const [_, navigate] = useLocation();
   const { data: categories, isLoading, error } = useQuery<Category[]>({
     queryKey: ['/api/categories'],
+    queryFn: async () => {
+      const response = await fetch('/api/categories');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
   });
+
+  const getCategoryImage = (slug: string) => {
+    const imageMap: Record<string, string> = {
+      'solar-solutions': solarImage,
+      'tile-grout': tileGroutImage,
+      'epoxy-grout': epoxyGroutImage,
+      'ceiling-plaster': ceilingPlasterImage,
+      'wood-finishes': woodVarnishImage
+    };
+    return imageMap[slug] || solarImage; // Default to solar image if no match
+  };
 
   if (isLoading) {
     return <div className="text-center py-16">Loading categories...</div>;
@@ -39,9 +62,16 @@ const CategoriesPage: FC = () => {
           {categories.map((category) => (
             <div 
               key={category.slug} 
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
               onClick={() => navigate(`/category/${category.slug}`)}
             >
+              <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
+                <img 
+                  src={getCategoryImage(category.slug)}
+                  alt={category.name}
+                  className="object-cover w-full h-full"
+                />
+              </div>
               <h2 className="text-xl font-bold mb-2">{category.name}</h2>
               <p className="text-neutral-500 mb-4">{category.description || "No description provided."}</p>
               <Button variant="outline" className="w-full">
