@@ -178,12 +178,6 @@ export class MemStorage implements IStorage {
         featured: true,
         inStock: true
       }
-        subCategory: "Drills & Drivers",
-        brand: "WADFOW",
-        inStock: true,
-        featured: true,
-        isOnSale: true
-      },
       {
         name: "Complete Solar System Package 2kW",
         description: "Complete solar power system with panels, inverter and batteries",
