@@ -8,7 +8,11 @@ import { apiRequest } from '@/lib/queryClient';
 const ProductCategory: FC = () => {
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
-    queryFn: () => apiRequest('GET', '/api/products')
+    queryFn: async () => {
+      const response = await apiRequest('GET', '/api/products');
+      const data = await response.json();
+      return data;
+    }
   });
 
   if (isLoading) {
@@ -35,7 +39,7 @@ const ProductCategory: FC = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">All Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products?.map((product) => (
+        {products && products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
