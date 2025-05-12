@@ -13,12 +13,13 @@ const ProductCategory: FC = () => {
     queryFn: async () => {
       const response = await fetch(`/api/products/category/${slug}`);
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch products');
+        throw new Error('Failed to fetch products');
       }
-      return response.json();
+      const data = await response.json();
+      return data;
     },
-    enabled: !!slug
+    enabled: !!slug,
+    retry: 1
   });
 
   if (isLoading) {

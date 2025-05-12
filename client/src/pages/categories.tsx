@@ -26,11 +26,11 @@ const CategoriesPage: FC = () => {
 
   const getCategoryImage = (slug: string) => {
     const imageMap: Record<string, string> = {
-      'solar-solutions': solarImage,
-      'tile-grout': tileGroutImage,
-      'epoxy-grout': epoxyGroutImage,
-      'ceiling-plaster': ceilingPlasterImage,
-      'wood-finishes': woodVarnishImage
+      'power-tools': solarImage,
+      'building-materials': tileGroutImage,
+      'lighting': ceilingPlasterImage,
+      'paints': woodVarnishImage,
+      'adhesives': epoxyGroutImage
     };
     return imageMap[slug] || solarImage; // Default to solar image if no match
   };
