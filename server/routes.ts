@@ -47,6 +47,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { category } = req.params;
       const products = await storage.getProductsByCategory(category);
+      if (!products.length) {
+        return res.status(404).json({ message: "No products found in this category" });
+      }
       res.json(products);
     } catch (error) {
       res.status(500).json({ message: "Error fetching products by category" });
@@ -104,6 +107,7 @@ router.use((req, res, next) => {
   if (!sessionId) {
     sessionId = randomUUID();
     res.setHeader('X-Cart-Session', sessionId);
+    res.setHeader('Access-Control-Expose-Headers', 'X-Cart-Session');
   }
   req.headers.authorization = sessionId;
   next();
