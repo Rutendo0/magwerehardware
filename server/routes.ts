@@ -86,34 +86,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get category by slug
-  router.get("/categories/:slug", async (req: Request, res: Response) => {
+  router.get("/products/categories/:slug", async (req, res) => {
+    const { slug } = req.params;
     try {
-      const { slug } = req.params;
-      const category = await storage.getCategoryBySlug(slug);
-      
-      if (!category) {
-        return res.status(404).json({ message: "Category not found" });
-      }
-      
-      res.json(category);
+      const products = await storage.getProductsByCategory(slug);
+       
+      res.json(products);
     } catch (error) {
-      res.status(500).json({ message: "Error fetching category" });
+      res.status(500).json({ message: "Error fetching products" });
     }
   });
 
   // Cart operations
   // Get session ID or create new one
-  function getSessionId(req: Request): string {
-    if (!req.headers.authorization) {
-      return randomUUID();
-    }
-    return req.headers.authorization;
-  }
+  // In your cart API calls, modify the headers:
+const sessionId = localStorage.getItem('cartSessionId') || randomUUID();
+if (!localStorage.getItem('cartSessionId')) {
+  localStorage.setItem('cartSessionId', sessionId);
+}
 
+const response = await fetch('/api/cart', {
+  headers: {
+    'Authorization': sessionId
+  }
+});
   // Get cart items
   router.get("/cart", async (req: Request, res: Response) => {
     try {
-      const sessionId = getSessionId(req);
+      const sessionId = req.headers.authorization as string;
       const cartItems = await storage.getCartItems(sessionId);
       
       // Include full product details in response
@@ -139,7 +139,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add to cart
   router.post("/cart", async (req: Request, res: Response) => {
     try {
-      const sessionId = getSessionId(req);
+      const sessionId = req.headers.authorization as string;
       
       const validatedData = insertCartItemSchema.parse({
         ...req.body,
@@ -226,7 +226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Clear cart
   router.delete("/cart", async (req: Request, res: Response) => {
     try {
-      const sessionId = getSessionId(req);
+      const sessionId = req.headers.authorization as string;
       await storage.clearCart(sessionId);
       res.json({ message: "Cart cleared" });
     } catch (error) {

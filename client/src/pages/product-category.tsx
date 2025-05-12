@@ -2,16 +2,18 @@
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { Product } from '@shared/schema';
+import { useParams } from 'react-router-dom';
 import ProductCard from '@/components/ui/product-card';
-import { apiRequest } from '@/lib/queryClient';
 
 const ProductCategory: FC = () => {
-  const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: ['/api/products'],
+  const { slug } = useParams<{ slug: string }>();
+
+  const { data: products, isLoading, error } = useQuery<Product[]>({
+    queryKey: [`/api/products/categories/${slug}`],  // Changed to "categories"
     queryFn: async () => {
-      const response = await apiRequest('GET', '/api/products');
-      const data = await response.json();
-      return data;
+      const response = await fetch(`/api/products/categories/${slug}`);  // Changed to "categories"
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
     }
   });
 
@@ -33,6 +35,11 @@ const ProductCategory: FC = () => {
         </div>
       </div>
     );
+  }
+
+  if (error) {
+    console.error("Error fetching products:", error);
+    return <div className="text-center py-16">Error loading products. Please try again later.</div>;
   }
 
   return (

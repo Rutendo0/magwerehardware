@@ -15,6 +15,7 @@ import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { CartItem, Product } from '@shared/schema';
+import { error } from 'console';
 
 interface CartItemWithProduct extends CartItem {
   product?: Product;
@@ -30,10 +31,20 @@ const Cart: FC = () => {
   const { toast } = useToast();
   const [processingItemId, setProcessingItemId] = useState<number | null>(null);
   
-  const { data: cart, isLoading, error } = useQuery<CartResponse>({
-    queryKey: ['/api/cart'],
-  });
-  
+ // Modify your cart queries to include the session ID
+const { data: cart, isLoading, error } = useQuery<CartResponse>({
+  queryKey: ['/api/cart'],
+  queryFn: async () => {
+    const sessionId = localStorage.getItem('cartSessionId') || '';
+    const response = await fetch('/api/cart', {
+      headers: {
+        'Authorization': sessionId
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch cart');
+    return response.json();
+  }
+});
   const updateCartItemMutation = useMutation({
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
       return apiRequest('PATCH', `/api/cart/${id}`, { quantity });
