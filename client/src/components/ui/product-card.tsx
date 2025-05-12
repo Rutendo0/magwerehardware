@@ -19,10 +19,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
-      await apiRequest('POST', '/api/cart', {
+      const response = await apiRequest('POST', '/api/cart', {
         productId: product.id,
         quantity: 1
       });
+      const data = await response.json();
+      return data;
     },
     onSuccess: () => {
       setIsAddingToCart(false);

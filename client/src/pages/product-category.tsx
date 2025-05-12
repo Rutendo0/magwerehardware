@@ -12,9 +12,12 @@ const ProductCategory: FC = () => {
       const response = await apiRequest('GET', '/api/products');
       const data = await response.json();
       if (!Array.isArray(data)) {
-        throw new Error('Invalid products data');
+        return [];
       }
-      return data;
+      return data.map(product => ({
+        ...product,
+        imageUrl: product.imageUrl?.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`
+      }));
     }
   });
 
