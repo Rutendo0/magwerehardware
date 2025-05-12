@@ -14,10 +14,7 @@ const ProductCategory: FC = () => {
       if (!Array.isArray(data)) {
         return [];
       }
-      return data.map(product => ({
-        ...product,
-        imageUrl: product.imageUrl?.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`
-      }));
+      return data;
     }
   });
 

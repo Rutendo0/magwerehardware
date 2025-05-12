@@ -1,3 +1,4 @@
+
 import { FC, useState } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -23,8 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         productId: product.id,
         quantity: 1
       });
-      const data = await response.json();
-      return data;
+      return response;
     },
     onSuccess: () => {
       setIsAddingToCart(false);
@@ -45,6 +45,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   });
 
   const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     setIsAddingToCart(true);
     addToCartMutation.mutate();
@@ -54,7 +55,6 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     navigate(`/product/${product.id}`);
   };
 
-  // Helper function to render star ratings
   const renderStars = (rating: number = 4) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -76,6 +76,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return stars;
   };
 
+  const imageUrl = product.imageUrl && !product.imageUrl.startsWith('http') 
+    ? `/attached_assets/${product.imageUrl}`
+    : product.imageUrl;
+
   return (
     <div 
       onClick={handleNavigateToProduct}
@@ -83,7 +87,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     >
       <div className="relative">
         <img 
-          src={product.imageUrl || '/placeholder.jpg'} 
+          src={imageUrl || '/placeholder.jpg'} 
           alt={product.name} 
           className="w-full h-64 object-contain p-4"
           onError={(e) => {
