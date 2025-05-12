@@ -21,11 +21,11 @@ interface DropdownItem {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const [_, navigate] = useLocation();
-  
+
   const { data: categories } = useQuery<Category[]>({
     queryKey: ['/api/categories'],
   });
-  
+
   const [dropdowns, setDropdowns] = useState<DropdownItem[]>([
     {
       label: 'Products',
@@ -58,7 +58,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 lg:hidden">
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-      
+
       {/* Menu */}
       <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl flex flex-col">
         <div className="p-4 border-b flex items-center justify-between">
@@ -69,7 +69,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <X className="h-6 w-6" />
           </Button>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto px-4 py-2">
           <nav className="space-y-1">
             <button
@@ -79,7 +79,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <Home className="mr-3 h-5 w-5 text-gray-500" />
               <span className="font-medium">Home</span>
             </button>
-            
+
             {/* Products dropdown */}
             <div>
               <button
@@ -96,16 +96,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                   <ChevronRight className="h-5 w-5 text-gray-500" />
                 )}
               </button>
-              
+
               {dropdowns[0].isOpen && (
                 <div className="ml-8 mt-1 space-y-1">
-                  <button
-                    className="flex items-center w-full py-2 px-4 rounded-md hover:bg-gray-100"
-                    onClick={() => handleNavigate('/products')}
-                  >
-                    <span className="text-gray-700">All Products</span>
-                  </button>
-                  
                   {categories?.map((category) => (
                     <button
                       key={category.id}
@@ -118,7 +111,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                 </div>
               )}
             </div>
-            
+
             <button
               className="flex items-center w-full py-3 px-4 rounded-md hover:bg-gray-100"
               onClick={() => handleNavigate('/category/solar-solutions')}
@@ -126,7 +119,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <Zap className="mr-3 h-5 w-5 text-gray-500" />
               <span className="font-medium">Solar Solutions</span>
             </button>
-            
+
             <button
               className="flex items-center w-full py-3 px-4 rounded-md hover:bg-gray-100"
               onClick={() => handleNavigate('/bulk-orders')}
@@ -134,7 +127,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <Briefcase className="mr-3 h-5 w-5 text-gray-500" />
               <span className="font-medium">Bulk Orders</span>
             </button>
-            
+
             <button
               className="flex items-center w-full py-3 px-4 rounded-md hover:bg-gray-100"
               onClick={() => handleNavigate('/contact')}
@@ -144,7 +137,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             </button>
           </nav>
         </div>
-        
+
         <div className="p-4 border-t">
           <div className="grid grid-cols-2 gap-2">
             <Button
@@ -155,7 +148,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <User className="mr-2 h-4 w-4" />
               <span>Account</span>
             </Button>
-            
+
             <Button
               className="w-full"
               onClick={() => handleNavigate('/cart')}

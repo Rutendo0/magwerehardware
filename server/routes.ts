@@ -94,7 +94,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  
+
 
   // Cart operations
 // Get session ID from cookie or create new one
@@ -113,7 +113,7 @@ router.use((req, res, next) => {
     try {
       const sessionId = req.headers.authorization as string;
       const cartItems = await storage.getCartItems(sessionId);
-      
+
       // Include full product details in response
       const cartWithProducts = await Promise.all(
         cartItems.map(async (item) => {
@@ -124,7 +124,7 @@ router.use((req, res, next) => {
           };
         })
       );
-      
+
       res.json({
         sessionId,
         items: cartWithProducts
@@ -138,22 +138,22 @@ router.use((req, res, next) => {
   router.post("/cart", async (req: Request, res: Response) => {
     try {
       const sessionId = req.headers.authorization as string;
-      
+
       const validatedData = insertCartItemSchema.parse({
         ...req.body,
         sessionId
       });
-      
+
       // Check if product exists
       const product = await storage.getProductById(validatedData.productId);
       if (!product) {
         return res.status(404).json({ message: "Product not found" });
       }
-      
+
       // Check if item already exists in cart
       const cartItems = await storage.getCartItems(sessionId);
       const existingItem = cartItems.find(item => item.productId === validatedData.productId);
-      
+
       if (existingItem) {
         // Update existing item
         const updatedItem = await storage.updateCartItemQuantity(
@@ -162,7 +162,7 @@ router.use((req, res, next) => {
         );
         return res.json(updatedItem);
       }
-      
+
       // Add new item
       const newCartItem = await storage.addToCart(validatedData);
       res.status(201).json(newCartItem);
@@ -179,21 +179,21 @@ router.use((req, res, next) => {
     try {
       const id = parseInt(req.params.id);
       const { quantity } = req.body;
-      
+
       if (isNaN(id)) {
         return res.status(400).json({ message: "Invalid cart item ID" });
       }
-      
+
       if (typeof quantity !== 'number' || quantity < 1) {
         return res.status(400).json({ message: "Quantity must be a positive number" });
       }
-      
+
       const updatedItem = await storage.updateCartItemQuantity(id, quantity);
-      
+
       if (!updatedItem) {
         return res.status(404).json({ message: "Cart item not found" });
       }
-      
+
       res.json(updatedItem);
     } catch (error) {
       res.status(500).json({ message: "Error updating cart item" });
@@ -204,17 +204,17 @@ router.use((req, res, next) => {
   router.delete("/cart/:id", async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
-      
+
       if (isNaN(id)) {
         return res.status(400).json({ message: "Invalid cart item ID" });
       }
-      
+
       const success = await storage.removeFromCart(id);
-      
+
       if (!success) {
         return res.status(404).json({ message: "Cart item not found" });
       }
-      
+
       res.json({ message: "Item removed from cart" });
     } catch (error) {
       res.status(500).json({ message: "Error removing item from cart" });
@@ -262,9 +262,9 @@ router.use((req, res, next) => {
 
   // Register routes
   app.use("/api", router);
-  
+
   // Create HTTP server
   const httpServer = createServer(app);
-  
+
   return httpServer;
 }

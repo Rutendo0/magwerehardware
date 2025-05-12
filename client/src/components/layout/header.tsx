@@ -91,7 +91,7 @@ const Header = () => {
               >
                 Home
               </button>
-              
+
               <div className="group relative">
                 <button 
                   className="font-medium hover:text-primary inline-flex items-center"
@@ -102,16 +102,11 @@ const Header = () => {
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
-                
+
                 <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="py-2">
-                    <button 
-                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                      onClick={() => navigate('/products')}
-                    >
-                      All Products
-                    </button>
                     
+
                     {categories?.map((category) => (
                       <button 
                         key={category.id}
@@ -124,21 +119,21 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              
+
               <button 
                 className="font-medium hover:text-primary"
                 onClick={() => navigate('/category/solar-solutions')}
               >
                 Solar Solutions
               </button>
-              
+
               <button 
                 className="font-medium hover:text-primary"
                 onClick={() => navigate('/bulk-orders')}
               >
                 Bulk Orders
               </button>
-              
+
               <button 
                 className="font-medium hover:text-primary"
                 onClick={() => navigate('/contact')}
