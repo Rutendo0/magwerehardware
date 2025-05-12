@@ -727,26 +727,6 @@ const ProductCategory: FC = () => {
                     <Button onClick={() => navigate('/')}>Return to Home</Button>
                   </div>
                 )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  // Category not found
-  if (!category) {
-    return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-3xl font-bold mb-4">Category Not Found</h1>
-        <p className="mb-8">The category you're looking for doesn't exist.</p>
-        <Button onClick={() => navigate('/categories')}>
-          Browse All Categories
-        </Button>
-      </div>
-    );
-  }
   
   return (
     <div className="bg-gray-50 min-h-screen">
