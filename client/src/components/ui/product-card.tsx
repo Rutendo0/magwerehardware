@@ -79,7 +79,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return stars;
   };
 
-  const imageUrl = `/attached_assets/${product.imageUrl}`;
+  const imageUrl = product.imageUrl ? 
+    product.imageUrl.startsWith('http') ? 
+      product.imageUrl : 
+      `/attached_assets/${product.imageUrl}` : 
+    '/placeholder.jpg';
 
   return (
     <div 
@@ -98,7 +102,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         />
         {product.isOnSale && (
           <div className="absolute top-4 left-4">
-            <span className="bg-secondary text-black text-xs font-bold py-1 px-2 rounded">SALE</span>
+            <span className="bg-red-500 text-white text-xs font-bold py-1 px-2 rounded">SALE</span>
           </div>
         )}
       </div>
