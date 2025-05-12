@@ -98,17 +98,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Cart operations
-  // Get session ID or create new one
-  // In your cart API calls, modify the headers:
-const sessionId = localStorage.getItem('cartSessionId') || randomUUID();
-if (!localStorage.getItem('cartSessionId')) {
-  localStorage.setItem('cartSessionId', sessionId);
-}
-
-const response = await fetch('/api/cart', {
-  headers: {
-    'Authorization': sessionId
+// Get session ID from cookie or create new one
+router.use((req, res, next) => {
+  let sessionId = req.headers.authorization;
+  if (!sessionId) {
+    sessionId = randomUUID();
+    res.setHeader('X-Cart-Session', sessionId);
   }
+  req.headers.authorization = sessionId;
+  next();
 });
   // Get cart items
   router.get("/cart", async (req: Request, res: Response) => {
