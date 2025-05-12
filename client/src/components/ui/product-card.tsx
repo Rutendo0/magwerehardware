@@ -1,127 +1,79 @@
-import { FC, useState } from 'react';
-import { useLocation } from 'wouter';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ShoppingCart, Star, StarHalf } from 'lucide-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
-import { useToast } from '@/hooks/use-toast';
-import { Product } from '@shared/schema';
+import { ShoppingCart } from 'lucide-react';
+import type { Product } from '@shared/schema';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
-  const [_, navigate] = useLocation();
 
-  const addToCartMutation = useMutation({
-    mutationFn: async () => {
-      return apiRequest('POST', '/api/cart', {
-        productId: product.id,
-        quantity: 1
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          quantity: 1,
+        }),
       });
-    },
-    onSuccess: () => {
-      setIsAddingToCart(false);
-      queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
-      toast({
-        title: "Added to cart",
-        description: `${product.name} has been added to your cart.`,
-      });
-    },
-    onError: (error) => {
-      setIsAddingToCart(false);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to add item to cart",
-        variant: "destructive",
-      });
+
+      if (!response.ok) throw new Error('Failed to add to cart');
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    } catch (error) {
+      console.error('Error adding to cart:', error);
     }
-  });
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsAddingToCart(true);
-    addToCartMutation.mutate();
-  };
-
-  const handleNavigateToProduct = () => {
-    navigate(`/product/${product.id}`);
-  };
-
-  // Helper function to render star ratings
-  const renderStars = (rating: number = 4) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={`star-${i}`} className="fill-yellow-400 text-yellow-400" />);
-    }
-
-    if (hasHalfStar) {
-      stars.push(<StarHalf key="half-star" className="fill-yellow-400 text-yellow-400" />);
-    }
-
-    const emptyStars = 5 - stars.length;
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(<Star key={`empty-star-${i}`} className="text-yellow-400" />);
-    }
-
-    return stars;
   };
 
   return (
-    <div 
-      onClick={handleNavigateToProduct}
-      className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg block h-full cursor-pointer"
-    >
-      <div className="relative">
-        <img 
-          src={product.imageUrl.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`} 
-          alt={product.name}
-          className="w-full h-64 object-contain p-4"
-          onError={(e) => {
-            e.currentTarget.src = '/placeholder-image.jpg';
-          }}
-        />
-        {product.isOnSale && (
-          <div className="absolute top-4 left-4">
-            <span className="bg-secondary text-black text-xs font-bold py-1 px-2 rounded">SALE</span>
-          </div>
-        )}
-      </div>
-      <div className="p-4 border-t">
-        <h3 className="font-medium text-lg mb-2">{product.name}</h3>
-        <div className="flex items-center mb-2">
-          <div className="flex text-yellow-400">
-            {renderStars()}
-          </div>
-          <span className="text-sm text-neutral-500 ml-2">(24)</span>
+    <Card className="overflow-hidden h-full flex flex-col">
+      <Link to={`/products/${product.id}`} className="overflow-hidden">
+        <div className="aspect-square overflow-hidden">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+          />
         </div>
-        <div className="flex items-end justify-between mt-3">
-          <div>
-            {product.salePrice && (
-              <span className="text-neutral-500 line-through text-sm">${Number(product.price).toFixed(2)}</span>
-            )}
-            <div className="text-xl font-bold text-primary">
-              ${Number(product.salePrice || product.price).toFixed(2)}
-            </div>
+      </Link>
+      <CardContent className="p-4 flex flex-col flex-grow">
+        <Link to={`/products/${product.id}`}>
+          <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors">
+            {product.name}
+          </h3>
+        </Link>
+        <div className="flex items-center mb-2">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} className="text-yellow-400 text-lg">
+              {star <= Math.floor(product.rating ?? 0) ? "★" : "☆"}
+            </span>
+          ))}
+          <span className="text-sm text-gray-500 ml-2">
+            ({product.numReviews ?? 0})
+          </span>
+        </div>
+        <div className="mt-auto">
+          <div className="text-xl font-bold text-primary mb-3">
+            ${product.price.toFixed(2)}
           </div>
           <Button 
-            className="flex items-center z-10"
             onClick={handleAddToCart}
-            disabled={isAddingToCart}
+            className="w-full bg-primary hover:bg-primary/90"
           >
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            <span>Add</span>
+            <ShoppingCart className="w-4 h-4 mr-2" />
+            Add to Cart
           </Button>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
