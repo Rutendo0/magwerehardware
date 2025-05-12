@@ -14,14 +14,7 @@ const ProductCategory: FC = () => {
       if (!Array.isArray(data)) {
         return [];
       }
-      return data.map(product => ({
-        ...product,
-        imageUrl: product.imageUrl 
-          ? product.imageUrl.startsWith('/') 
-            ? product.imageUrl 
-            : `/attached_assets/${product.imageUrl}`
-          : '/placeholder.jpg'
-      }));
+      return data;
     }
   });
 

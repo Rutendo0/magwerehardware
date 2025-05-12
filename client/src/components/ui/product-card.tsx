@@ -24,13 +24,16 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         productId: product.id,
         quantity: 1
       });
-      return response;
+      if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+      }
+      return response.json();
     },
     onSuccess: () => {
       setIsAddingToCart(false);
       queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
       toast({
-        title: "Added to cart",
+        title: "Success",
         description: `${product.name} has been added to your cart.`,
       });
     },
@@ -76,26 +79,21 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return stars;
   };
 
-  const imageUrl = product.imageUrl 
-    ? product.imageUrl.startsWith('http') 
-      ? product.imageUrl
-      : product.imageUrl.startsWith('/') 
-        ? product.imageUrl 
-        : `/attached_assets/${product.imageUrl}`
-    : '/placeholder.jpg';
+  const imageUrl = `/attached_assets/${product.imageUrl}`;
 
   return (
     <div 
       onClick={handleNavigateToProduct}
-      className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg block h-full cursor-pointer"
+      className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
     >
       <div className="relative">
         <img 
-          src={imageUrl || '/placeholder.jpg'} 
-          alt={product.name} 
+          src={imageUrl}
+          alt={product.name}
           className="w-full h-64 object-contain p-4"
           onError={(e) => {
-            e.currentTarget.src = '/placeholder.jpg';
+            const target = e.target as HTMLImageElement;
+            target.src = '/placeholder.jpg';
           }}
         />
         {product.isOnSale && (
@@ -122,12 +120,14 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </div>
           </div>
           <Button 
-            className="flex items-center z-10"
+            variant="default"
+            size="sm"
             onClick={handleAddToCart}
             disabled={isAddingToCart}
+            className="z-10"
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
       </div>
