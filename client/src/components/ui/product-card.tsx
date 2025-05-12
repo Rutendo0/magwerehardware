@@ -76,9 +76,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return stars;
   };
 
-  const imageUrl = product.imageUrl && !product.imageUrl.startsWith('http') 
-    ? `/attached_assets/${product.imageUrl}`
-    : product.imageUrl;
+  const imageUrl = product.imageUrl 
+    ? product.imageUrl.startsWith('http') 
+      ? product.imageUrl
+      : product.imageUrl.startsWith('/') 
+        ? product.imageUrl 
+        : `/attached_assets/${product.imageUrl}`
+    : '/placeholder.jpg';
 
   return (
     <div 
