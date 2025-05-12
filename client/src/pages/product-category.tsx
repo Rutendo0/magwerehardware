@@ -9,9 +9,9 @@ const ProductCategory: FC = () => {
   const { slug } = useParams<{ slug: string }>();
 
   const { data: products, isLoading, error } = useQuery<Product[]>({
-    queryKey: [`/api/products/categories/${slug}`],  // Changed to "categories"
+    queryKey: [`/api/products/category/${slug}`],
     queryFn: async () => {
-      const response = await fetch(`/api/products/categories/${slug}`);  // Changed to "categories"
+      const response = await fetch(`/api/products/category/${slug}`);
       if (!response.ok) throw new Error('Network response was not ok');
       return response.json();
     }
