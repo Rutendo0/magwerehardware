@@ -3,10 +3,12 @@ import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { Product } from '@shared/schema';
 import ProductCard from '@/components/ui/product-card';
+import { apiRequest } from '@/lib/queryClient';
 
 const ProductCategory: FC = () => {
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ['/api/products'],
+    queryFn: () => apiRequest('GET', '/api/products')
   });
 
   if (isLoading) {
