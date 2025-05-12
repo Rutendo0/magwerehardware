@@ -57,20 +57,20 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     for (let i = 0; i < fullStars; i++) {
       stars.push(<Star key={`star-${i}`} className="fill-yellow-400 text-yellow-400" />);
     }
-    
+
     if (hasHalfStar) {
       stars.push(<StarHalf key="half-star" className="fill-yellow-400 text-yellow-400" />);
     }
-    
+
     const emptyStars = 5 - stars.length;
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<Star key={`empty-star-${i}`} className="text-yellow-400" />);
     }
-    
+
     return stars;
   };
 
@@ -81,9 +81,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     >
       <div className="relative">
         <img 
-          src={product.imageUrl} 
-          alt={product.name} 
+          src={product.imageUrl.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`} 
+          alt={product.name}
           className="w-full h-64 object-contain p-4"
+          onError={(e) => {
+            e.currentTarget.src = '/placeholder-image.jpg';
+          }}
         />
         {product.isOnSale && (
           <div className="absolute top-4 left-4">
