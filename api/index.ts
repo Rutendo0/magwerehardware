@@ -1,27 +1,35 @@
-// This acts as the Vercel serverless function entry point
+import express from 'express';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { IncomingHttpHeaders } from 'http';
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+
+// Test API route
+app.get('/api/hello', (req, res) => {
+  res.json({ message: "API is working!" });
+});
+
+// Vercel serverless handler
 export default async (req: VercelRequest, res: VercelResponse) => {
-  // Convert Vercel's request to Express-compatible format
-  const { method, headers, url } = req;
-  const request = {
+  // Convert Vercel request to Express format
+  const { method, headers, url, body } = req;
+  
+  const expressReq = {
     method,
     headers,
     url,
-    body: req.body,
-  };
-  
-  // Convert Express response to Vercel format
-  const response = {
+    body,
+  } as any;
+
+  const expressRes = {
     statusCode: 200,
     headers: {},
-    setHeader: (name, value) => (response.headers[name] = value),
-    end: (body) => res.send(body),
-  };
-  
-  await app(request, response);
-};
+    setHeader: (name: string, value: string) => res.setHeader(name, value),
+    end: (data: any) => res.send(data),
+  } as any;
 
-function app(request: { method: string | undefined; headers: IncomingHttpHeaders; url: string | undefined; body: any; }, response: { statusCode: number; headers: {}; setHeader: (name: any, value: any) => any; end: (body: any) => VercelResponse; }) {
-  throw new Error('Function not implemented.');
-}
+  // Forward to Express
+  app(expressReq, expressRes);
+};

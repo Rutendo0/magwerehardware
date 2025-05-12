@@ -340,7 +340,16 @@ export class MemStorage implements IStorage {
 
   async createProduct(product: InsertProduct): Promise<Product> {
     const id = this.productId++;
-    const newProduct: Product = { ...product, id };
+    const newProduct: Product = { 
+      ...product, 
+      id, 
+      salePrice: product.salePrice ?? null, 
+      brand: product.brand ?? null, 
+      subCategory: product.subCategory ?? null, 
+      inStock: product.inStock ?? null, 
+      featured: product.featured ?? null, 
+      isOnSale: product.isOnSale ?? null 
+    };
     this.products.set(id, newProduct);
     return newProduct;
   }
@@ -358,7 +367,13 @@ export class MemStorage implements IStorage {
 
   async createCategory(category: InsertCategory): Promise<Category> {
     const id = this.categoryId++;
-    const newCategory: Category = { ...category, id };
+    const newCategory: Category = { 
+      ...category, 
+      id, 
+      description: category.description ?? null,
+      imageUrl: category.imageUrl ?? null,
+      productCount: category.productCount ?? null
+    };
     this.categories.set(id, newCategory);
     return newCategory;
   }
@@ -375,6 +390,7 @@ export class MemStorage implements IStorage {
     const newCartItem: CartItem = { 
       ...cartItem, 
       id, 
+      quantity: cartItem.quantity !== undefined ? cartItem.quantity : 1,
       addedAt: new Date() 
     };
     this.cartItems.set(id, newCartItem);
@@ -407,8 +423,11 @@ export class MemStorage implements IStorage {
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const id = this.messageId++;
     const newMessage: ContactMessage = { 
-      ...message, 
-      id, 
+      id,
+      name: message.name,
+      message: message.message,
+      email: message.email,
+      phone: message.phone !== undefined ? message.phone : null,
       createdAt: new Date() 
     };
     this.contactMessages.set(id, newMessage);
