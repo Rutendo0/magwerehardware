@@ -10,7 +10,8 @@ const ProductCategory: FC = () => {
     queryKey: ['/api/products'],
     queryFn: async () => {
       const response = await apiRequest('GET', '/api/products');
-      return response.json();
+      const data = await response.json();
+      return Array.isArray(data) ? data : [];
     }
   });
 
