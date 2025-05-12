@@ -177,7 +177,7 @@ export class MemStorage implements IStorage {
         brand: "BuildPro",
         featured: true,
         inStock: true
-      }
+      },
       {
         name: "Complete Solar System Package 2kW",
         description: "Complete solar power system with panels, inverter and batteries",
