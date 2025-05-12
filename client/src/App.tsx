@@ -24,14 +24,13 @@ function Router() {
       <Route path="/category/:category/:subcategory" component={ProductCategory} />
       <Route path="/product/:id" component={ProductDetail} />
       <Route path="/products" component={ProductCategory} />
+      <Route path="/categories" component={CategoriesPage} />
       <Route path="/cart" component={Cart} />
       <Route path="/contact" component={Contact} />
       <Route path="/about" component={About} />
       <Route path="/account" component={Account} />
       <Route path="/bulk-orders" component={BulkOrders} />
       <Route path="/refer" component={Account} />
-      <Route path="/categories" component={ProductCategory} />
-      <Route path="/categories" component={CategoriesPage} />
       <Route component={NotFound} />
     </Switch>
   );

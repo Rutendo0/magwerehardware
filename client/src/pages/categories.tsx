@@ -2,6 +2,9 @@
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Category } from '@shared/schema';
+import { useLocation } from 'wouter';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useLocation } from 'wouter';
