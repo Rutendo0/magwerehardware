@@ -120,8 +120,64 @@ export class MemStorage implements IStorage {
         description: "Professional cordless drill with 2 batteries and charger",
         price: "180.00",
         salePrice: "150.00",
-        imageUrl: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG93ZXIlMjBkcmlsbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        category: "Power Tools",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        category: "power-tools",
+        brand: "WADFOW",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Solar Panel Kit",
+        description: "Complete solar panel kit with inverter and batteries",
+        price: "2500.00",
+        salePrice: "2200.00",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        category: "solar-solutions",
+        brand: "SolarMax",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Professional Tile Grout",
+        description: "High-quality tile grout for professional installations",
+        price: "45.00",
+        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        category: "tiling-materials",
+        brand: "TilePro",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Wall Paint",
+        description: "Superior quality interior wall paint",
+        price: "75.00",
+        salePrice: "65.00",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        category: "paints-finishes",
+        brand: "ColorMaster",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "LED Panel Light",
+        description: "Energy-efficient LED panel light for commercial use",
+        price: "120.00",
+        imageUrl: "/assets/IMG-20250419-WA0009.jpg",
+        category: "lighting",
+        brand: "BrightTech",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Construction Cement",
+        description: "High-strength portland cement for construction",
+        price: "25.00",
+        imageUrl: "/assets/IMG-20250419-WA0019.jpg",
+        category: "building-materials",
+        brand: "BuildPro",
+        featured: true,
+        inStock: true
+      }
         subCategory: "Drills & Drivers",
         brand: "WADFOW",
         inStock: true,

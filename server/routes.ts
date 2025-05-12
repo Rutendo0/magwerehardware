@@ -50,12 +50,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   router.get("/products/category/:category", async (req: Request, res: Response) => {
     try {
       const { category } = req.params;
-      const products = await storage.getProductsByCategory(category);
-      if (!products.length) {
+      const normalizedCategory = category.toLowerCase().replace(/\s+/g, '-');
+      const products = await storage.getProductsByCategory(normalizedCategory);
+      if (!products || !products.length) {
         return res.status(404).json({ message: "No products found in this category" });
       }
       res.json(products);
     } catch (error) {
+      console.error("Error fetching products by category:", error);
       res.status(500).json({ message: "Error fetching products by category" });
     }
   });

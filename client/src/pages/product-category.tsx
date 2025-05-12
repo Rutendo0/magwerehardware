@@ -1,4 +1,3 @@
-
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'wouter';
@@ -51,13 +50,20 @@ const ProductCategory: FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products && products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        <h1 className="text-3xl font-bold mb-8">{slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</h1>
+        {products && products.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <h2 className="text-2xl font-bold mb-4">No Products Found</h2>
+            <p className="text-gray-600 mb-8">Check back later for new products in this category.</p>
+          </div>
+        )}
       </div>
-    </div>
   );
 };
 
