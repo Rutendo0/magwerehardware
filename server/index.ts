@@ -1,11 +1,11 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import path from "path";
-import { fileURLToPath } from 'url'; // ADD THIS for ESM __dirname fix
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url); // <-- Add this
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -63,25 +63,28 @@ app.use((req, res, next) => {
     await setupVite(app, server);
   } else {
     // In production mode:
-    // 1. Serve static frontend
-    app.use(express.static(path.join(__dirname, 'client')));
+    const clientDistPath = join(__dirname, '../client/dist');
+    
+    // 1. Serve static frontend files
+    app.use(express.static(clientDistPath));
 
     // 2. Serve index.html for SPA routing
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, 'client', 'index.html'));
+      res.sendFile(join(clientDistPath, 'index.html'));
     });
 
-    // 3. Also serve static backend files
+    // 3. Serve backend static files if needed
     serveStatic(app);
   }
 
   // Start server
-  const port = 5000;
+  const port = process.env.PORT || 5000;
   server.listen({
     port,
     host: "0.0.0.0",
     reusePort: true,
   }, () => {
+    log(`Server running in ${isProduction ? 'production' : 'development'} mode`);
     log(`Serving on port ${port}`);
   });
 })();
