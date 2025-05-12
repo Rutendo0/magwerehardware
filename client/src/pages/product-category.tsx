@@ -11,7 +11,10 @@ const ProductCategory: FC = () => {
     queryFn: async () => {
       const response = await apiRequest('GET', '/api/products');
       const data = await response.json();
-      return Array.isArray(data) ? data : [];
+      if (!Array.isArray(data)) {
+        return [];
+      }
+      return data;
     }
   });
 
@@ -35,20 +38,25 @@ const ProductCategory: FC = () => {
     );
   }
 
+  if (!products || products.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">All Products</h1>
+        <div className="text-center py-16">
+          <h2 className="text-2xl font-bold mb-2">No Products Found</h2>
+          <p className="text-neutral-600">There are no products available at the moment.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">All Products</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products && products.length > 0 ? (
-          products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))
-        ) : (
-          <div className="col-span-full text-center py-16">
-            <h2 className="text-2xl font-bold mb-2">No Products Found</h2>
-            <p className="text-neutral-600">There are no products available at the moment.</p>
-          </div>
-        )}
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
