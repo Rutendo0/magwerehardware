@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -20,20 +19,16 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const addToCartMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest('POST', '/api/cart', {
+      return apiRequest('POST', '/api/cart', {
         productId: product.id,
         quantity: 1
       });
-      if (!response.ok) {
-        throw new Error('Failed to add item to cart');
-      }
-      return response.json();
     },
     onSuccess: () => {
       setIsAddingToCart(false);
       queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
       toast({
-        title: "Success",
+        title: "Added to cart",
         description: `${product.name} has been added to your cart.`,
       });
     },
@@ -48,7 +43,6 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   });
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
     e.stopPropagation();
     setIsAddingToCart(true);
     addToCartMutation.mutate();
@@ -58,6 +52,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     navigate(`/product/${product.id}`);
   };
 
+  // Helper function to render star ratings
   const renderStars = (rating: number = 4) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -79,22 +74,16 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return stars;
   };
 
-  const imageUrl = `/attached_assets/${product.imageUrl}`;
-
   return (
     <div 
       onClick={handleNavigateToProduct}
-      className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      className="product-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg block h-full cursor-pointer"
     >
       <div className="relative">
         <img 
-          src={imageUrl}
-          alt={product.name}
+          src={product.imageUrl} 
+          alt={product.name} 
           className="w-full h-64 object-contain p-4"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/placeholder.jpg';
-          }}
         />
         {product.isOnSale && (
           <div className="absolute top-4 left-4">
@@ -120,14 +109,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             </div>
           </div>
           <Button 
-            variant="default"
-            size="sm"
+            className="flex items-center z-10"
             onClick={handleAddToCart}
             disabled={isAddingToCart}
-            className="z-10"
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
-            Add
+            <span>Add</span>
           </Button>
         </div>
       </div>
