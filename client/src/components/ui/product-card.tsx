@@ -1,79 +1,61 @@
 import { FC } from 'react';
 import { Link } from 'wouter';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
+import { Button } from './button';
 import type { Product } from '@shared/schema';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const queryClient = useQueryClient();
+  const handleAddToCart = () => {
+    // TODO: Implement add to cart functionality
+  };
 
-  const handleAddToCart = async () => {
-    try {
-      const response = await fetch('/api/cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId: product.id,
-          quantity: 1,
-        }),
-      });
-
-      if (!response.ok) throw new Error('Failed to add to cart');
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-    }
+  const displayPrice = (price: number | string) => {
+    const numericPrice = typeof price === 'string' ? parseFloat(price) : price;
+    return numericPrice.toFixed(2);
   };
 
   return (
-    <Card className="overflow-hidden h-full flex flex-col">
-      <Link to={`/products/${product.id}`} className="overflow-hidden">
-        <div className="aspect-square overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <Link href={`/product/${product.id}`}>
+        <div className="relative h-48">
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover"
           />
+          {product.isOnSale && (
+            <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">
+              Sale
+            </div>
+          )}
         </div>
       </Link>
-      <CardContent className="p-4 flex flex-col flex-grow">
-        <Link to={`/products/${product.id}`}>
-          <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors">
-            {product.name}
-          </h3>
+      <div className="p-4">
+        <Link href={`/product/${product.id}`}>
+          <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
         </Link>
-        <div className="flex items-center mb-2">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} className="text-yellow-400 text-lg">
-              {star <= Math.floor(product.rating ?? 0) ? "★" : "☆"}
-            </span>
-          ))}
-          <span className="text-sm text-gray-500 ml-2">
-            ({product.numReviews ?? 0})
-          </span>
-        </div>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {product.description}
+        </p>
         <div className="mt-auto">
           <div className="text-xl font-bold text-primary mb-3">
-            ${typeof product.price === 'string' ? parseFloat(product.price).toFixed(2) : (product.price || 0).toFixed(2)}
+            ${displayPrice(product.salePrice || product.price)}
           </div>
           <Button 
             onClick={handleAddToCart}
-            className="w-full bg-primary hover:bg-primary/90"
+            className="w-full"
+            disabled={!product.inStock}
           >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Add to Cart
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
