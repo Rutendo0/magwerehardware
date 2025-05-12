@@ -1,4 +1,4 @@
-// src/pages/categories.tsx
+
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Category } from '@shared/schema';
@@ -36,10 +36,17 @@ const CategoriesPage: FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {categories.map((category, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+          {categories.map((category) => (
+            <div 
+              key={category.slug} 
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => navigate(`/category/${category.slug}`)}
+            >
               <h2 className="text-xl font-bold mb-2">{category.name}</h2>
-              <p className="text-neutral-500">{category.description || "No description provided."}</p>
+              <p className="text-neutral-500 mb-4">{category.description || "No description provided."}</p>
+              <Button variant="outline" className="w-full">
+                View Products
+              </Button>
             </div>
           ))}
         </div>
