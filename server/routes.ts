@@ -17,8 +17,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   router.get("/products", async (req: Request, res: Response) => {
     try {
       const products = await storage.getAllProducts();
+      if (!products || products.length === 0) {
+        return res.status(404).json({ message: "No products found" });
+      }
       res.json(products);
     } catch (error) {
+      console.error("Error fetching products:", error);
       res.status(500).json({ message: "Error fetching products" });
     }
   });

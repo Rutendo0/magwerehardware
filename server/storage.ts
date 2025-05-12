@@ -226,6 +226,39 @@ export class MemStorage implements IStorage {
 
   // Product operations
   async getAllProducts(): Promise<Product[]> {
+    if (this.products.size === 0) {
+      // Initialize with some default products if empty
+      const defaultProducts: InsertProduct[] = [
+        {
+          name: "WADFOW 20V Cordless Drill Set",
+          description: "Professional cordless drill with 2 batteries and charger",
+          price: "180.00",
+          salePrice: "150.00",
+          imageUrl: "/assets/IMG-20250419-WA0009.jpg",
+          category: "Power Tools",
+          subCategory: "Drills",
+          brand: "WADFOW",
+          inStock: true,
+          featured: true,
+          isOnSale: true
+        },
+        {
+          name: "MAG-GRIP Epoxy Grout",
+          description: "High-strength epoxy grout for porcelain and ceramic paving",
+          price: "22.99",
+          salePrice: null,
+          imageUrl: "/assets/IMG-20250419-WA0013.jpg",
+          category: "Tiling Materials",
+          subCategory: "Grouts",
+          brand: "MAG-GRIP",
+          inStock: true,
+          featured: false,
+          isOnSale: false
+        }
+      ];
+      
+      defaultProducts.forEach(product => this.createProduct(product));
+    }
     return Array.from(this.products.values());
   }
 
