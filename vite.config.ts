@@ -1,6 +1,11 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import path from "path"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Polyfill for __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   root: path.resolve(__dirname, "client"),
@@ -15,4 +20,4 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "client/build"),
     emptyOutDir: true,
   },
-})
+});

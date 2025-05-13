@@ -88,6 +88,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   router.get("/categories", async (req: Request, res: Response) => {
     try {
       const categories = await storage.getAllCategories();
+            if (!categories || categories.length === 0) {
+        return res.status(404).json({ message: "No categories found" });
+      }
       res.json(categories);
     } catch (error) {
       res.status(500).json({ message: "Error fetching categories" });
