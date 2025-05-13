@@ -13,6 +13,7 @@ import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
 import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
 import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
 
+//gg
 const CategoriesPage: FC = () => {
   const [_, navigate] = useLocation();
   const { data: categories, isLoading, error } = useQuery<Category[]>({
