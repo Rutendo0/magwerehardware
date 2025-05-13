@@ -1,23 +1,13 @@
-// This acts as the Vercel serverless function entry point
-import app from '../server/index.ts';
+import { createServer } from 'http';
+import express from 'express';
+import { registerRoutes } from '../server/index'; // Make sure this imports the registerRoutes from your server file
 
-export default async (req, res) => {
-  // Convert Vercel's request to Express-compatible format
-  const { method, headers, url } = req;
-  const request = {
-    method,
-    headers,
-    url,
-    body: req.body,
-  };
-  
-  // Convert Express response to Vercel format
-  const response = {
-    statusCode: 200,
-    headers: {},
-    setHeader: (name, value) => (response.headers[name] = value),
-    end: (body) => res.send(body),
-  };
-  
-  await app(request, response);
+const app = express();
+
+// Initialize routes
+registerRoutes(app);
+
+// Export serverless handler
+export default (req, res) => {
+  app(req, res); // Pass the request and response to the Express app
 };
