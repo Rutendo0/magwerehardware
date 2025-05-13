@@ -1,11 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
-import path, { join } from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import path from 'path';
 
 const app = express();
 
@@ -63,14 +59,15 @@ app.use((req, res, next) => {
     await setupVite(app, server);
   } else {
     // In production mode:
-    const clientDistPath = join(__dirname, '../client/dist');
-    
+    // Use a static path to your client build folder without relying on __dirname
+    const clientDistPath = path.join(process.cwd(), 'client', 'dist');
+
     // 1. Serve static frontend files
     app.use(express.static(clientDistPath));
 
     // 2. Serve index.html for SPA routing
     app.get('*', (req, res) => {
-      res.sendFile(join(clientDistPath, 'index.html'));
+      res.sendFile(path.join(clientDistPath, 'index.html'));
     });
 
     // 3. Serve backend static files if needed
