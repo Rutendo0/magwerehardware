@@ -175,6 +175,10 @@ export class MemStorage implements IStorage {
         featured: true,
         inStock: true
       },
+      {
+        name: "Professional Tool Set",
+        description: "Complete set of professional hardware tools",
+        price: "199.99",
         imageUrl: "/assets/IMG-20250419-WA0016.jpg",
         category: "hardware-tools",
         brand: "WADFOW",
