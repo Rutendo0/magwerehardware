@@ -68,12 +68,40 @@ export class MemStorage implements IStorage {
     // Add categories
     const categories: InsertCategory[] = [
       {
-        name: "Power Tools",
-        slug: "power-tools",
-        description: "Professional power tools for construction and DIY projects",
-        imageUrl: "https://images.unsplash.com/photo-1503480207415-fdddcc21d5fc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dG9vbHMlMjBhbmQlMjBlcXVpcG1lbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 86
+        name: "Building Materials",
+        slug: "building-materials",
+        description: "Quality building and construction materials",
+        imageUrl: "/assets/IMG-20250419-WA0019.jpg",
+        productCount: 45
       },
+      {
+        name: "Tiling Solutions",
+        slug: "tiling-solutions", 
+        description: "Complete range of tiling and grouting products",
+        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        productCount: 32
+      },
+      {
+        name: "Solar Equipment",
+        slug: "solar-equipment",
+        description: "Solar panels, inverters and complete solar solutions",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        productCount: 28
+      },
+      {
+        name: "Hardware Tools",
+        slug: "hardware-tools",
+        description: "Professional hardware and hand tools",
+        imageUrl: "/assets/IMG-20250419-WA0013.jpg",
+        productCount: 64
+      },
+      {
+        name: "Paint & Finishes",
+        slug: "paint-finishes",
+        description: "Quality paints, varnishes and wood finishes",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        productCount: 38
+      }
       {
         name: "Solar Solutions",
         slug: "solar-solutions",
@@ -116,10 +144,37 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
-        name: "WADFOW 20V Cordless Drill Set",
-        description: "Professional cordless drill with 2 batteries and charger",
-        price: "180.00",
-        salePrice: "150.00",
+        name: "MAG-GRIP Premium Tile Adhesive",
+        description: "High-performance tile adhesive for all types of tiles",
+        price: "45.00",
+        salePrice: "39.99",
+        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        category: "tiling-solutions",
+        brand: "MAG-GRIP",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Solar Panel Kit 5kW",
+        description: "Complete solar system with inverter and batteries",
+        price: "2999.99",
+        salePrice: "2799.99",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        category: "solar-equipment",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Wall Paint 20L",
+        description: "Interior and exterior wall paint",
+        price: "89.99",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        category: "paint-finishes",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
         imageUrl: "/assets/IMG-20250419-WA0016.jpg",
         category: "power-tools",
         brand: "WADFOW",

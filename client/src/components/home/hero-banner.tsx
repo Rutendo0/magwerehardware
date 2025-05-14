@@ -5,45 +5,23 @@ import { Button } from '@/components/ui/button';
 const HeroBanner: FC = () => {
   const [_, navigate] = useLocation();
 
-  const handleShopNow = () => {
-    navigate('/products');
-  };
-
-  const handleSpecialOffers = () => {
-    navigate('/products');
-  };
-
   return (
-    <section className="relative">
-      <div className="relative">
-        {/* Overlay and Pattern */}
-        <div className="bg-gradient-to-r from-primary/90 to-primary/70 absolute inset-0 z-10"></div>
-        <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(#8A2BE2_0.5px,transparent_0.5px),radial-gradient(#8A2BE2_0.5px,#f3f4f6_0.5px)] bg-[length:20px_20px] bg-[position:0_0,10px_10px]"></div>
-        
-        {/* Content */}
-        <div className="container mx-auto px-4 py-16 md:py-24 relative z-20">
-          <div className="max-w-3xl text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 font-heading">
-              Your Complete Hardware Solution
-            </h1>
-            <p className="text-lg md:text-xl mb-8">
-              Quality tools, building materials, and solar solutions for professionals and DIY enthusiasts.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                onClick={handleShopNow}
-                className="bg-secondary text-black hover:bg-secondary/80 font-medium py-3 px-8 rounded-lg"
-              >
-                Shop Now
-              </Button>
-              <Button 
-                onClick={handleSpecialOffers}
-                variant="outline" 
-                className="bg-white text-primary hover:bg-gray-100 font-medium py-3 px-8 rounded-lg"
-              >
-                Special Offers
-              </Button>
-            </div>
+    <section className="relative bg-black text-white">
+      <div className="container mx-auto px-4 py-24">
+        <div className="max-w-3xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Your One-Stop Hardware & Building Materials Store
+          </h1>
+          <p className="text-xl mb-8">
+            Quality building materials, solar solutions, and hardware tools at competitive prices
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Button onClick={() => navigate('/products')} size="lg">
+              Shop Now
+            </Button>
+            <Button onClick={() => navigate('/contact')} variant="outline" size="lg">
+              Contact Us
+            </Button>
           </div>
         </div>
       </div>
