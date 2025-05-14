@@ -144,13 +144,32 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
-        name: "MAG-GRIP Premium Tile Adhesive",
-        description: "High-performance tile adhesive for all types of tiles",
-        price: "45.00",
-        salePrice: "39.99",
-        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
-        category: "tiling-solutions",
-        brand: "MAG-GRIP",
+        name: "Heavy Duty Wheelbarrow",
+        description: "Durable construction wheelbarrow for professional use",
+        price: "89.99",
+        imageUrl: "/assets/IMG-20250419-WA0022.jpg",
+        category: "building-materials",
+        brand: "BuildPro",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Professional Paint Roller Set",
+        description: "Complete paint roller kit with extensions",
+        price: "35.99",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        category: "paint-finishes",
+        brand: "ColorMaster",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Cement Mix",
+        description: "High-quality cement for construction projects",
+        price: "12.99",
+        imageUrl: "/assets/IMG-20250419-WA0019.jpg",
+        category: "building-materials",
+        brand: "BuildPro",
         featured: true,
         inStock: true
       },
