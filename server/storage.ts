@@ -71,47 +71,37 @@ export class MemStorage implements IStorage {
         name: "Building Materials",
         slug: "building-materials",
         description: "Quality building and construction materials",
-        imageUrl: "/assets/IMG-20250419-WA0019.jpg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.24.jpeg",
         productCount: 45
       },
       {
         name: "Solar Equipment",
         slug: "solar-equipment",
         description: "Complete solar power solutions and equipment",
-        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.16.jpeg",
         productCount: 28
       },
       {
         name: "Hardware Tools",
         slug: "hardware-tools",
         description: "Professional grade hardware tools",
-        imageUrl: "/assets/IMG-20250419-WA0013.jpg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.20.jpeg",
         productCount: 35
       },
       {
         name: "Paint & Finishes",
         slug: "paint-finishes",
         description: "Quality paints and wood finishes",
-        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.22.jpeg",
         productCount: 42
       },
       {
         name: "Tiling Solutions",
         slug: "tiling-solutions",
         description: "Complete tiling and grouting solutions",
-        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.14.jpeg",
         productCount: 30
       },
-      {
-        name: "Tiling Solutions",
-        slug: "tiling-solutions", 
-        description: "Complete range of tiling and grouting products",
-        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
-        productCount: 32
-      },
-      {
-        name: "Solar Equipment",
-        slug: "solar-equipment",
         description: "Solar panels, inverters and complete solar solutions",
         imageUrl: "/assets/IMG-20250419-WA0016.jpg",
         productCount: 28

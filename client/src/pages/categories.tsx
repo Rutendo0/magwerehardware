@@ -1,18 +1,9 @@
-
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Category } from '@shared/schema';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-
-// Import all category images
-import solarImage from '@assets/IMG-20250419-WA0016.jpg';
-import tilingImage from '@assets/IMG-20250419-WA0011.jpg';
-import hardwareImage from '@assets/IMG-20250419-WA0013.jpg';
-import buildingImage from '@assets/IMG-20250419-WA0019.jpg';
-import paintImage from '@assets/IMG-20250419-WA0010.jpg';
-import ceilingImage from '@assets/IMG-20250419-WA0009.jpg';
 
 const CategoriesPage: FC = () => {
   const [_, navigate] = useLocation();
@@ -24,25 +15,6 @@ const CategoriesPage: FC = () => {
       return response.json();
     }
   });
-
-  const getCategoryImage = (category: Category) => {
-    switch(category.slug) {
-      case 'solar-equipment':
-        return solarImage;
-      case 'tiling-solutions':
-        return tilingImage;
-      case 'hardware-tools':
-        return hardwareImage;
-      case 'building-materials':
-        return buildingImage;
-      case 'paint-finishes':
-        return paintImage;
-      case 'ceiling-solutions':
-        return ceilingImage;
-      default:
-        return category.imageUrl || buildingImage;
-    }
-  };
 
   if (isLoading) {
     return <div className="text-center py-16">Loading categories...</div>;
@@ -56,6 +28,16 @@ const CategoriesPage: FC = () => {
     return <div className="text-center py-16">No categories found.</div>;
   }
 
+  // Remove duplicates by slug
+  const uniqueCategories = categories.reduce((acc, current) => {
+    const x = acc.find(item => item.slug === current.slug);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, [] as Category[]);
+
   return (
     <section className="py-16 bg-neutral-50">
       <div className="container mx-auto px-4">
@@ -68,17 +50,21 @@ const CategoriesPage: FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {categories.map((category) => (
+          {uniqueCategories.map((category) => (
             <div 
-              key={category.slug} 
+              key={category.id || category.slug}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
               onClick={() => navigate(`/category/${category.slug}`)}
             >
               <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
                 <img 
-                  src={getCategoryImage(category)}
+                  src={category.imageUrl}
                   alt={category.name}
                   className="object-cover w-full h-full"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/attached_assets/WhatsApp Image 2025-05-14 at 10.49.24.jpeg';
+                  }}
                 />
               </div>
               <h2 className="text-xl font-bold mb-2">{category.name}</h2>
