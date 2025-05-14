@@ -1,27 +1,25 @@
 
 import { FC } from 'react';
 
-interface LogoProps {
+interface MagwareLogoProps {
   className?: string;
   isPrimary?: boolean;
 }
 
-const MagwereLogo: FC<LogoProps> = ({ className = "h-8 w-auto", isPrimary = true }) => {
+const MagwareLogo: FC<MagwareLogoProps> = ({ className = "", isPrimary = true }) => {
+  const primaryColor = isPrimary ? "text-primary" : "text-white";
+  const secondaryColor = isPrimary ? "text-neutral-800" : "text-white";
+  
   return (
-    <img 
-      src="/Logo.png"
-      alt="Magware Hardware Store"
-      className={className}
-      style={{ 
-        filter: isPrimary ? 'none' : 'brightness(0) invert(1)',
-        objectFit: 'contain'
-      }}
-      onError={(e) => {
-        const img = e.target as HTMLImageElement;
-        console.error('Failed to load logo:', img.src);
-      }}
-    />
+    <div className={`flex items-center ${className}`}>
+      <div className="text-4xl font-bold">
+        <span className={primaryColor}>MAG</span>
+        <span className={secondaryColor}>WARE</span>
+        <span className="border-2 border-secondary px-3 py-1 rounded ml-1"></span>
+      </div>
+      <span className="text-base ml-3 text-neutral-500">Hardware Store</span>
+    </div>
   );
 };
 
-export default MagwereLogo;
+export default MagwareLogo;
