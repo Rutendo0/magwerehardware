@@ -12,6 +12,7 @@ import tilingImage from '@assets/IMG-20250419-WA0011.jpg';
 import hardwareImage from '@assets/IMG-20250419-WA0013.jpg';
 import buildingImage from '@assets/IMG-20250419-WA0019.jpg';
 import paintImage from '@assets/IMG-20250419-WA0010.jpg';
+import ceilingImage from '@assets/IMG-20250419-WA0009.jpg';
 
 const CategoriesPage: FC = () => {
   const [_, navigate] = useLocation();
@@ -24,15 +25,23 @@ const CategoriesPage: FC = () => {
     }
   });
 
-  const getCategoryImage = (slug: string) => {
-    const imageMap: Record<string, string> = {
-      'solar-equipment': solarImage,
-      'tiling-solutions': tilingImage,
-      'hardware-tools': hardwareImage,
-      'building-materials': buildingImage,
-      'paint-finishes': paintImage
-    };
-    return imageMap[slug] || buildingImage;
+  const getCategoryImage = (category: Category) => {
+    switch(category.slug) {
+      case 'solar-equipment':
+        return solarImage;
+      case 'tiling-solutions':
+        return tilingImage;
+      case 'hardware-tools':
+        return hardwareImage;
+      case 'building-materials':
+        return buildingImage;
+      case 'paint-finishes':
+        return paintImage;
+      case 'ceiling-solutions':
+        return ceilingImage;
+      default:
+        return category.imageUrl || buildingImage;
+    }
   };
 
   if (isLoading) {
@@ -67,7 +76,7 @@ const CategoriesPage: FC = () => {
             >
               <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
                 <img 
-                  src={getCategoryImage(category.slug)}
+                  src={getCategoryImage(category)}
                   alt={category.name}
                   className="object-cover w-full h-full"
                 />
