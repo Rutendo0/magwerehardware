@@ -6,14 +6,13 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
-// Import category images
+// Import all category images
 import solarImage from '@assets/IMG-20250419-WA0016.jpg';
-import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
-import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
-import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
-import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
+import tilingImage from '@assets/IMG-20250419-WA0011.jpg';
+import hardwareImage from '@assets/IMG-20250419-WA0013.jpg';
+import buildingImage from '@assets/IMG-20250419-WA0019.jpg';
+import paintImage from '@assets/IMG-20250419-WA0010.jpg';
 
-//gg
 const CategoriesPage: FC = () => {
   const [_, navigate] = useLocation();
   const { data: categories, isLoading, error } = useQuery<Category[]>({
@@ -27,13 +26,13 @@ const CategoriesPage: FC = () => {
 
   const getCategoryImage = (slug: string) => {
     const imageMap: Record<string, string> = {
-      'solar-solutions': solarImage,
-      'building-materials': tileGroutImage,
-      'lighting': ceilingPlasterImage,
-      'paints': woodVarnishImage,
-      'adhesives': epoxyGroutImage
+      'solar-equipment': solarImage,
+      'tiling-solutions': tilingImage,
+      'hardware-tools': hardwareImage,
+      'building-materials': buildingImage,
+      'paint-finishes': paintImage
     };
-    return imageMap[slug] || solarImage; // Default to solar image if no match
+    return imageMap[slug] || buildingImage;
   };
 
   if (isLoading) {
