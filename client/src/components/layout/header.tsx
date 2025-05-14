@@ -36,6 +36,17 @@ const Header = () => {
     }
   };
 
+  const { data: cart } = useQuery({
+    queryKey: ['/api/cart'],
+    queryFn: async () => {
+      const response = await fetch('/api/cart', {
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to fetch cart');
+      return response.json();
+    }
+  });
+
   return (
     <header className="sticky top-0 z-40 w-full">
       {/* Top Bar */}
@@ -105,7 +116,7 @@ const Header = () => {
 
                 <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="py-2">
-                    
+
 
                     {categories?.map((category) => (
                       <button 
@@ -179,7 +190,7 @@ const Header = () => {
               >
                 <ShoppingCart className="h-5 w-5" />
                 <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  0
+                  {cart?.items?.length || 0}
                 </span>
               </Button>
 
@@ -232,3 +243,4 @@ const Header = () => {
 };
 
 export default Header;
+```
