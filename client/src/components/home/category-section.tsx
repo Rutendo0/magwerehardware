@@ -25,8 +25,7 @@ const CategoryCard: FC<EnhancedCategoryProps> = ({ title, description, image, hr
     <img src={image} alt={title} className={`${featured ? 'h-96' : 'h-64'} w-full object-cover`} />
     <div className="p-6">
       <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <p className="text-neutral-600 mb-4">{description}</p>
-      <a href={href} className="text-blue-500 hover:underline">Discover</a>
+      <p className="text-neutral-600">{description}</p>
     </div>
   </div>
 );
@@ -138,4 +137,3 @@ const CategorySection: FC = () => {
 };
 
 export default CategorySection;
-
