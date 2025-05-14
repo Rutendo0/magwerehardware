@@ -12,8 +12,29 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [imageError, setImageError] = useState(false);
 
-  const handleAddToCart = () => {
-    // TODO: Implement add to cart functionality
+  const handleAddToCart = async () => {
+    try {
+      const response = await fetch('/api/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          quantity: 1
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to add item to cart');
+      }
+      
+      // Could add a toast notification here
+      console.log('Added to cart successfully');
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
   };
 
   const displayPrice = (price: number | string) => {
@@ -30,7 +51,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : `/attached_assets/${product.imageUrl.split('/').pop()}`}
+            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : product.imageUrl.startsWith('/') ? product.imageUrl : `/attached_assets/${product.imageUrl}`}
             alt={product.name}
             className="w-full h-full object-cover"
             onError={handleImageError}
