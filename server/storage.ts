@@ -75,6 +75,34 @@ export class MemStorage implements IStorage {
         productCount: 45
       },
       {
+        name: "Solar Equipment",
+        slug: "solar-equipment",
+        description: "Complete solar power solutions and equipment",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        productCount: 28
+      },
+      {
+        name: "Hardware Tools",
+        slug: "hardware-tools",
+        description: "Professional grade hardware tools",
+        imageUrl: "/assets/IMG-20250419-WA0013.jpg",
+        productCount: 35
+      },
+      {
+        name: "Paint & Finishes",
+        slug: "paint-finishes",
+        description: "Quality paints and wood finishes",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        productCount: 42
+      },
+      {
+        name: "Tiling Solutions",
+        slug: "tiling-solutions",
+        description: "Complete tiling and grouting solutions",
+        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        productCount: 30
+      },
+      {
         name: "Tiling Solutions",
         slug: "tiling-solutions", 
         description: "Complete range of tiling and grouting products",
@@ -144,12 +172,52 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
-        name: "Heavy Duty Wheelbarrow",
-        description: "Durable construction wheelbarrow for professional use",
-        price: "89.99",
-        imageUrl: "/assets/IMG-20250419-WA0022.jpg",
+        name: "Professional Solar Kit",
+        description: "Complete solar power system with inverter",
+        price: "1299.99",
+        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
+        category: "solar-equipment",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Tile Adhesive",
+        description: "High-quality tile adhesive for professional use",
+        price: "45.99",
+        imageUrl: "/assets/IMG-20250419-WA0011.jpg",
+        category: "tiling-solutions",
+        brand: "MAG-GRIP",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Construction Hardware Kit",
+        description: "Complete set of professional construction tools",
+        price: "199.99",
+        imageUrl: "/assets/IMG-20250419-WA0013.jpg",
+        category: "hardware-tools",
+        brand: "WADFOW",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Wall Paint",
+        description: "High-quality interior and exterior paint",
+        price: "79.99",
+        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
+        category: "paint-finishes",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Building Materials Set",
+        description: "Essential building and construction materials",
+        price: "299.99",
+        imageUrl: "/assets/IMG-20250419-WA0019.jpg",
         category: "building-materials",
-        brand: "BuildPro",
+        brand: "Magwere",
         featured: true,
         inStock: true
       },
