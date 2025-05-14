@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Phone } from 'lucide-react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { AdvancedMarkerElement } from '@googlemaps/markerwithlabel';
 
 const StoreLocation: FC = () => {
   // Store location coordinates (latitude and longitude)
@@ -30,6 +31,16 @@ const StoreLocation: FC = () => {
     height: '100%'
   };
 
+    const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
+  });
+
+  const center = { lat: -17.824858, lng: 31.053028 };
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
@@ -39,20 +50,21 @@ const StoreLocation: FC = () => {
             Come and explore our wide range of hardware and building materials
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <div className="bg-gray-200 rounded-lg h-96 overflow-hidden">
               {apiKey ? (
-                <LoadScript googleMapsApiKey={apiKey}>
                   <GoogleMap
                     mapContainerStyle={mapContainerStyle}
                     center={storeLocation}
                     zoom={15}
                   >
-                    <Marker position={storeLocation} />
+                    <AdvancedMarkerElement
+                      position={center}
+                      title="Magwere Hardware Store"
+                    />
                   </GoogleMap>
-                </LoadScript>
               ) : (
                 <div className="w-full h-full bg-gray-300 flex items-center justify-center">
                   <span className="text-gray-500">Map loading failed - API key missing</span>
@@ -60,11 +72,11 @@ const StoreLocation: FC = () => {
               )}
             </div>
           </div>
-          
+
           <div>
             <div className="bg-neutral-50 p-8 rounded-lg h-full">
               <h3 className="text-2xl font-medium mb-6">Store Information</h3>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="bg-primary rounded-full w-10 h-10 flex items-center justify-center text-white mr-4 flex-shrink-0">
@@ -78,7 +90,7 @@ const StoreLocation: FC = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-primary rounded-full w-10 h-10 flex items-center justify-center text-white mr-4 flex-shrink-0">
                     <Clock className="h-5 w-5" />
@@ -92,7 +104,7 @@ const StoreLocation: FC = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="bg-primary rounded-full w-10 h-10 flex items-center justify-center text-white mr-4 flex-shrink-0">
                     <Phone className="h-5 w-5" />
@@ -107,7 +119,7 @@ const StoreLocation: FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-8">
                 <Button 
                   className="bg-primary hover:bg-primary-700"

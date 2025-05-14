@@ -13,9 +13,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client/src"),
-      "@assets": path.resolve(__dirname, "attached_assets"), // ✅ Updated path
+      "@assets": path.resolve(__dirname, "attached_assets"),
     },
   },
+  publicDir: path.resolve(__dirname, "attached_assets"),
   build: {
     outDir: path.resolve(__dirname, "client/build"),
     emptyOutDir: true,
