@@ -101,7 +101,7 @@ export class MemStorage implements IStorage {
         description: "Quality paints, varnishes and wood finishes",
         imageUrl: "/assets/IMG-20250419-WA0010.jpg",
         productCount: 38
-      }
+      },
       {
         name: "Solar Solutions",
         slug: "solar-solutions",
