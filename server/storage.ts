@@ -172,6 +172,66 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
+        name: "Cement Mixture S1",
+        description: "High-quality cement mixture for construction",
+        price: "15.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.24.jpeg",
+        category: "building-materials",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Premium Ceiling Tiles",
+        description: "Decorative ceiling tiles for modern interiors",
+        price: "29.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.23.jpeg",
+        category: "ceiling-solutions",
+        brand: "MAG-GRIP",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Industrial Paint Bucket",
+        description: "Large capacity paint for commercial use",
+        price: "89.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.22.jpeg",
+        category: "paint-finishes",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Construction Sand Mix",
+        description: "Fine quality construction sand",
+        price: "12.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.21.jpeg",
+        category: "building-materials",
+        brand: "Magwere",
+        featured: false,
+        inStock: true
+      },
+      {
+        name: "Professional Tile Adhesive",
+        description: "Strong bonding tile adhesive for all surfaces",
+        price: "25.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.20.jpeg",
+        category: "tiling-solutions",
+        brand: "MAG-GRIP",
+        featured: true,
+        inStock: true
+      },
+      {
+        name: "Solar Panel 200W",
+        description: "High-efficiency solar panel for residential use",
+        price: "299.99",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.19.jpeg",
+        category: "solar-equipment",
+        brand: "Magwere",
+        featured: true,
+        inStock: true
+      },
+      {
         name: "Professional Solar Kit",
         description: "Complete solar power system with inverter",
         price: "1299.99",
