@@ -14,22 +14,22 @@ export interface IStorage {
   getFeaturedProducts(limit?: number): Promise<Product[]>;
   getOnSaleProducts(limit?: number): Promise<Product[]>;
   createProduct(product: InsertProduct): Promise<Product>;
-  
+
   // Category operations
   getAllCategories(): Promise<Category[]>;
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
   createCategory(category: InsertCategory): Promise<Category>;
-  
+
   // Cart operations
   getCartItems(sessionId: string): Promise<CartItem[]>;
   addToCart(cartItem: InsertCartItem): Promise<CartItem>;
   updateCartItemQuantity(id: number, quantity: number): Promise<CartItem | undefined>;
   removeFromCart(id: number): Promise<boolean>;
   clearCart(sessionId: string): Promise<boolean>;
-  
+
   // Contact message operations
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
-  
+
   // Newsletter operations
   addSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
 }
@@ -40,7 +40,7 @@ export class MemStorage implements IStorage {
   private cartItems: Map<number, CartItem>;
   private contactMessages: Map<number, ContactMessage>;
   private subscribers: Map<number, Subscriber>;
-  
+
   private productId: number;
   private categoryId: number;
   private cartItemId: number;
@@ -53,13 +53,13 @@ export class MemStorage implements IStorage {
     this.cartItems = new Map();
     this.contactMessages = new Map();
     this.subscribers = new Map();
-    
+
     this.productId = 1;
     this.categoryId = 1;
     this.cartItemId = 1;
     this.messageId = 1;
     this.subscriberId = 1;
-    
+
     // Initialize with some categories
     this.initializeData();
   }
@@ -101,64 +101,11 @@ export class MemStorage implements IStorage {
         description: "Complete tiling and grouting solutions",
         imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.14.jpeg",
         productCount: 30
-      },
-        description: "Solar panels, inverters and complete solar solutions",
-        imageUrl: "/assets/IMG-20250419-WA0016.jpg",
-        productCount: 28
-      },
-      {
-        name: "Hardware Tools",
-        slug: "hardware-tools",
-        description: "Professional hardware and hand tools",
-        imageUrl: "/assets/IMG-20250419-WA0013.jpg",
-        productCount: 64
-      },
-      {
-        name: "Paint & Finishes",
-        slug: "paint-finishes",
-        description: "Quality paints, varnishes and wood finishes",
-        imageUrl: "/assets/IMG-20250419-WA0010.jpg",
-        productCount: 38
-      },
-      {
-        name: "Solar Solutions",
-        slug: "solar-solutions",
-        description: "Complete solar equipment and installation packages",
-        imageUrl: "https://images.unsplash.com/photo-1583355530139-d977df57be3b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c29sYXIlMjBwYW5lbHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 42
-      },
-      {
-        name: "Tiling Materials",
-        slug: "tiling-materials",
-        description: "Tile grout, adhesives and tools for professional tiling",
-        imageUrl: "https://images.unsplash.com/photo-1586864387789-628af9feed72?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGlsZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 38
-      },
-      {
-        name: "Paints & Finishes",
-        slug: "paints-finishes",
-        description: "Quality paints, varnishes and wood finishes",
-        imageUrl: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGFpbnQlMjBjYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 53
-      },
-      {
-        name: "Lighting",
-        slug: "lighting",
-        description: "Modern lighting solutions for homes and offices",
-        imageUrl: "https://images.unsplash.com/photo-1560170412-0f438cfc87a9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2VpbGluZyUyMGxpZ2h0fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 26
-      },
-      {
-        name: "Building Materials",
-        slug: "building-materials",
-        description: "Construction and building supplies",
-        imageUrl: "https://images.unsplash.com/photo-1572363411478-e9ecfd58024a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8dGlsZXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-        productCount: 67
       }
     ];
-    
+
     categories.forEach(category => this.createCategory(category));
-    
+
     // Add products
     const products: InsertProduct[] = [
       {
@@ -466,7 +413,7 @@ export class MemStorage implements IStorage {
         isOnSale: false
       }
     ];
-    
+
     products.forEach(product => this.createProduct(product));
   }
 
@@ -502,7 +449,7 @@ export class MemStorage implements IStorage {
           isOnSale: false
         }
       ];
-      
+
       defaultProducts.forEach(product => this.createProduct(product));
     }
     return Array.from(this.products.values());
@@ -522,7 +469,7 @@ export class MemStorage implements IStorage {
     const featuredProducts = Array.from(this.products.values()).filter(
       product => product.featured
     );
-    
+
     return limit ? featuredProducts.slice(0, limit) : featuredProducts;
   }
 
@@ -530,7 +477,7 @@ export class MemStorage implements IStorage {
     const onSaleProducts = Array.from(this.products.values()).filter(
       product => product.isOnSale
     );
-    
+
     return limit ? onSaleProducts.slice(0, limit) : onSaleProducts;
   }
 
@@ -596,7 +543,7 @@ export class MemStorage implements IStorage {
   async updateCartItemQuantity(id: number, quantity: number): Promise<CartItem | undefined> {
     const cartItem = this.cartItems.get(id);
     if (!cartItem) return undefined;
-    
+
     const updatedItem: CartItem = { ...cartItem, quantity };
     this.cartItems.set(id, updatedItem);
     return updatedItem;
@@ -610,7 +557,7 @@ export class MemStorage implements IStorage {
     const cartItemsToRemove = Array.from(this.cartItems.values())
       .filter(item => item.sessionId === sessionId)
       .map(item => item.id);
-    
+
     cartItemsToRemove.forEach(id => this.cartItems.delete(id));
     return true;
   }
@@ -636,11 +583,11 @@ export class MemStorage implements IStorage {
     const existingSubscriber = Array.from(this.subscribers.values()).find(
       sub => sub.email === subscriber.email
     );
-    
+
     if (existingSubscriber) {
       return existingSubscriber;
     }
-    
+
     const id = this.subscriberId++;
     const newSubscriber: Subscriber = { 
       ...subscriber, 
