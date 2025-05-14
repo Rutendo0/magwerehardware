@@ -23,14 +23,15 @@ interface EnhancedCategoryProps {
 const CategoryCard: FC<EnhancedCategoryProps> = ({ title, description, image, href, featured }) => (
   <div className={`bg-white rounded-xl shadow-md overflow-hidden transition duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
     <img 
-    src={image} 
-    alt={title} 
-    className="h-64 w-full object-cover"
-    onError={(e) => {
-      const target = e.target as HTMLImageElement;
-      target.src = '/attached_assets/WhatsApp Image 2025-05-14 at 10.49.24.jpeg';
-    }}
-  />
+      src={`/attached_assets/${image.split('/').pop()}`}
+      alt={title} 
+      className="h-64 w-full object-cover"
+      onError={(e) => {
+        const target = e.target as HTMLImageElement;
+        target.src = '/attached_assets/IMG-20250419-WA0019.jpg';
+        target.onerror = null; // Prevent infinite loop if fallback fails
+      }}
+    />
     <div className="p-6">
       <h3 className="text-xl font-bold mb-2">{title}</h3>
       <p className="text-neutral-600">{description}</p>

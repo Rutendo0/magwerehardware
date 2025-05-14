@@ -30,7 +30,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={imageError ? '/assets/IMG-20250419-WA0019.jpg' : product.imageUrl}
+            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : `/attached_assets/${product.imageUrl.split('/').pop()}`}
             alt={product.name}
             className="w-full h-full object-cover"
             onError={handleImageError}
