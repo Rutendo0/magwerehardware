@@ -53,7 +53,7 @@ const Footer = () => {
                 Your trusted partner for all hardware and construction material needs since 2010. We offer quality products at competitive prices.
               </p>
               <div className="flex space-x-4 mt-6">
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
                   <Facebook size={20} />
                 </a>
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
