@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Phone } from 'lucide-react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { AdvancedMarkerElement } from "@googlemaps/marker-element";
 
 const StoreLocation: FC = () => {
   // Store location coordinates (latitude and longitude)
@@ -10,11 +8,6 @@ const StoreLocation: FC = () => {
     lat: -17.824858,
     lng: 31.053028
   };
-
-  // Use a hardcoded API key or ensure it's properly passed to the client
-  // In a real app, this should come from your environment variables
-  // and be exposed to the client via NEXT_PUBLIC_ prefix or similar
-  const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your actual key
 
   // Handle the "Get Directions" button click
   const handleGetDirections = () => {
@@ -24,22 +17,6 @@ const StoreLocation: FC = () => {
       '_blank'
     );
   };
-
-  // Map container style
-  const mapContainerStyle = {
-    width: '100%',
-    height: '100%'
-  };
-
-    const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey,
-  });
-
-  const center = { lat: -17.824858, lng: 31.053028 };
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <section className="py-12 bg-white">
@@ -53,23 +30,12 @@ const StoreLocation: FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <div className="bg-gray-200 rounded-lg h-96 overflow-hidden">
-              {apiKey ? (
-                  <GoogleMap
-                    mapContainerStyle={mapContainerStyle}
-                    center={storeLocation}
-                    zoom={15}
-                  >
-                    <AdvancedMarkerElement
-                      position={center}
-                      title="Magwere Hardware Store"
-                    />
-                  </GoogleMap>
-              ) : (
-                <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                  <span className="text-gray-500">Map loading failed - API key missing</span>
-                </div>
-              )}
+            <div className="bg-neutral-50 p-8 rounded-lg h-full flex items-center justify-center">
+              <div className="text-center">
+                <MapPin className="h-16 w-16 mx-auto mb-4 text-primary" />
+                <p className="text-lg font-medium">Find us at Avonlea Shopping Center</p>
+                <p className="text-neutral-600">Click 'Get Directions' for navigation</p>
+              </div>
             </div>
           </div>
 
