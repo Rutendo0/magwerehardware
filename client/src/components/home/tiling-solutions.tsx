@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
-import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
+import tileGroutImage from '/attached_assets/IMG-20250419-WA0011.jpg';
+import epoxyGroutImage from '/attached_assets/IMG-20250419-WA0013.jpg';
 
 const TilingSolutions: FC = () => {
   const [_, navigate] = useLocation();

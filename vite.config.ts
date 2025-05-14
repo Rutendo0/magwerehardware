@@ -16,9 +16,14 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "attached_assets"),
     },
   },
-  publicDir: path.resolve(__dirname, "attached_assets"),
   build: {
-    outDir: path.resolve(__dirname, "client/build"),
+    outDir: '../server/client',
+    assetsDir: 'assets',
     emptyOutDir: true,
-  },
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
+  }
 });

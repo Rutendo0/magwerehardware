@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '@shared/schema';
 
-const FeaturedProducts: FC = () => {
+const Featured: FC = () => {
   const { data: products, isLoading, error } = useQuery<Product[]>({
     queryKey: ['/api/products'],
   });
@@ -105,4 +105,4 @@ const FeaturedProducts: FC = () => {
   );
 };
 
-export default FeaturedProducts;
+export default Featured;

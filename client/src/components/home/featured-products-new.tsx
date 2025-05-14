@@ -1,17 +1,14 @@
 import { FC } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'wouter';
-import { Button } from '@/components/ui/button';
 import { Product } from '@shared/schema';
 
 // Image imports for real product images
-import ceilingLightsImage from '@assets/IMG-20250419-WA0009.jpg';
-import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
-import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
-import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
-import solarEquipmentImage from '@assets/IMG-20250419-WA0016.jpg';
-import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
+import ceilingLightsImage from '/attached_assets/IMG-20250419-WA0009.jpg';
+import woodVarnishImage from '/attached_assets/IMG-20250419-WA0010.jpg';
+import tileGroutImage from '/attached_assets/IMG-20250419-WA0011.jpg';
+import epoxyGroutImage from '/attached_assets/IMG-20250419-WA0013.jpg';
+import solarEquipmentImage from '/attached_assets/IMG-20250419-WA0016.jpg';
+import ceilingPlasterImage from '/attached_assets/IMG-20250419-WA0019.jpg';
 
 // Map of product categories to their respective images
 const productImageMap: Record<string, string> = {
@@ -23,10 +20,10 @@ const productImageMap: Record<string, string> = {
   "Ceiling Plaster": ceilingPlasterImage
 };
 
-const FeaturedProductsNew: FC = () => {
+const FeaturedNew: FC = () => {
   // Fetch featured products
   const { data: featuredProducts, isLoading } = useQuery<Product[]>({
-    queryKey: ['/api/products/featured/6'],
+    queryKey: ['/api//featured/6'],
   });
 
   return (
@@ -37,11 +34,6 @@ const FeaturedProductsNew: FC = () => {
             <h2 className="text-3xl font-bold mb-2">Featured Products</h2>
             <p className="text-neutral-600">Explore our high-quality selection of hardware and construction products</p>
           </div>
-          <Link href="/products">
-            <Button variant="outline" className="mt-4 md:mt-0">
-              View All Products <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </Link>
         </div>
         
         {isLoading ? (
@@ -71,14 +63,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Affordable Ceiling Lights</h3>
                 <p className="text-neutral-600 mb-3">Modern ceiling light fixtures for your home or office</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$29.99 - $99.99</span>
-                  <Link href="/category/lighting">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$29.99 - $99.99</span>
               </div>
               <div className="absolute top-4 left-4">
                 <span className="bg-secondary text-black text-sm font-bold py-1 px-3 rounded">SALE</span>
@@ -96,14 +81,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Splash Wood Varnish</h3>
                 <p className="text-neutral-600 mb-3">Protect your wood surfaces before the rainy season</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$19.99</span>
-                  <Link href="/category/paints">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$19.99</span>
               </div>
               <div className="absolute top-4 left-4">
                 <span className="bg-yellow-400 text-black text-sm font-bold py-1 px-3 rounded">WEEKLY PROMOTION</span>
@@ -121,14 +99,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Mag-Grip Tile Grout</h3>
                 <p className="text-neutral-600 mb-3">Fast set, easy application tile grout for interior and exterior joints</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$15.99</span>
-                  <Link href="/category/building/tile-grout">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$15.99</span>
               </div>
             </div>
             
@@ -143,14 +114,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Porcelain Epoxy Grout</h3>
                 <p className="text-neutral-600 mb-3">No more messy clean up, peels right off with a blade</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$24.99</span>
-                  <Link href="/category/building/epoxy-grout">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$24.99</span>
               </div>
               <div className="absolute top-4 right-4">
                 <span className="bg-blue-500 text-white text-sm font-bold py-1 px-3 rounded">NEW</span>
@@ -168,14 +132,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Solar Equipment Packages</h3>
                 <p className="text-neutral-600 mb-3">Complete solar equipment and installation packages</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$299.99+</span>
-                  <Link href="/category/solar-solutions">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$299.99+</span>
               </div>
             </div>
             
@@ -190,14 +147,7 @@ const FeaturedProductsNew: FC = () => {
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">Rhi-Lite Ceiling Plaster</h3>
                 <p className="text-neutral-600 mb-3">High-quality gypsum-based plaster for smooth, durable surfaces</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-primary">$18.99</span>
-                  <Link href="/category/building/plaster">
-                    <Button variant="ghost" className="text-primary hover:text-primary-dark hover:bg-primary/10">
-                      View Products
-                    </Button>
-                  </Link>
-                </div>
+                <span className="text-lg font-bold text-primary">$18.99</span>
               </div>
             </div>
           </div>
@@ -207,4 +157,4 @@ const FeaturedProductsNew: FC = () => {
   );
 };
 
-export default FeaturedProductsNew;
+export default FeaturedNew;

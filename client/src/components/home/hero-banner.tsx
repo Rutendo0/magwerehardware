@@ -13,7 +13,7 @@ const HeroBanner: FC = () => {
             Your One-Stop Hardware Store
           </h1>
           <p className="text-lg md:text-xl mb-8 text-blue-100">
-            Quality hardware products, construction materials, and exceptional service at competitive prices.
+            Quality hardware , construction materials, and exceptional service at competitive prices.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link href="/products">
@@ -22,20 +22,14 @@ const HeroBanner: FC = () => {
               </Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-blue-700">
+              <Button size="lg" variant="outline" className="border-white text-blue-600 hover:bg-blue-50">
                 Contact Us
               </Button>
             </Link>
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 right-0 w-1/2 h-full hidden lg:block">
-        <img 
-          src={import.meta.env.BASE_URL + `attached_assets/WhatsApp Image 2025-05-14 at 10.31.14.jpeg`}
-          alt="Hardware Store Products"
-          className="w-full h-full object-cover opacity-50"
-        />
-      </div>
+     
     </section>
   );
 };

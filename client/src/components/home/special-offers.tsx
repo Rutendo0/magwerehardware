@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, DollarSign, Percent } from 'lucide-react';
 import { Link } from 'wouter';
-import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
+import ceilingPlasterImage from '/attached_assets/IMG-20250419-WA0019.jpg';
 
 const SpecialOffers: FC = () => {
   return (

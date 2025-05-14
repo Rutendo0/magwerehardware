@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
-import solarImage from '@assets/IMG-20250419-WA0016.jpg';
+import solarImage from '/attached_assets/IMG-20250419-WA0016.jpg';
 
 const SolarSolutionsBanner: FC = () => {
   const [_, navigate] = useLocation();

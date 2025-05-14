@@ -31,11 +31,17 @@ const Cart: FC = () => {
   const { toast } = useToast();
   const [processingItemId, setProcessingItemId] = useState<number | null>(null);
   
- // Modify your cart queries to include the session ID
+// In your cart component
 const { data: cart, isLoading, error } = useQuery<CartResponse>({
   queryKey: ['/api/cart'],
   queryFn: async () => {
-    const sessionId = localStorage.getItem('cartSessionId') || '';
+    // Get or create session ID
+    let sessionId = localStorage.getItem('cartSessionId');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem('cartSessionId', sessionId);
+    }
+    
     const response = await fetch('/api/cart', {
       headers: {
         'Authorization': sessionId
@@ -45,6 +51,18 @@ const { data: cart, isLoading, error } = useQuery<CartResponse>({
     return response.json();
   }
 });
+
+const addToCartMutation = useMutation({
+  mutationFn: async (productId: number) => {
+    const sessionId = localStorage.getItem('cartSessionId') || '';
+    return apiRequest('POST', '/api/cart', {
+      productId,
+      quantity: 1,
+      sessionId
+    });
+  },
+});
+
   const updateCartItemMutation = useMutation({
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
       return apiRequest('PATCH', `/api/cart/${id}`, { quantity });

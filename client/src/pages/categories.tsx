@@ -58,7 +58,7 @@ const CategoriesPage: FC = () => {
             >
               <div className="relative h-48 mb-4 rounded-lg overflow-hidden">
                 <img 
-                  src={category.imageUrl}
+                  src={category.imageUrl ?? undefined}
                   alt={category.name}
                   className="object-cover w-full h-full"
                   onError={(e) => {

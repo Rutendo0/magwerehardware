@@ -6,11 +6,11 @@ import { ArrowRight } from 'lucide-react';
 import { Category } from '@shared/schema';
 
 // Import real product images
-import solarImage from '@assets/IMG-20250419-WA0016.jpg';
-import tileGroutImage from '@assets/IMG-20250419-WA0011.jpg';
-import epoxyGroutImage from '@assets/IMG-20250419-WA0013.jpg';
-import ceilingPlasterImage from '@assets/IMG-20250419-WA0019.jpg';
-import woodVarnishImage from '@assets/IMG-20250419-WA0010.jpg';
+import solarImage from '/attached_assets/IMG-20250419-WA0016.jpg';
+import tileGroutImage from '/attached_assets/IMG-20250419-WA0011.jpg';
+import epoxyGroutImage from '/attached_assets/IMG-20250419-WA0013.jpg';
+import ceilingPlasterImage from '/attached_assets/IMG-20250419-WA0019.jpg';
+import woodVarnishImage from '/attached_assets/IMG-20250419-WA0010.jpg';
 
 interface EnhancedCategoryProps {
   title: string;

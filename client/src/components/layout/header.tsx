@@ -91,7 +91,7 @@ const Header = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <button onClick={() => navigate('/')} className="block">
-                <MagwereLogo className="h-12 w-auto" />
+                <MagwereLogo className="h-28 w-auto  bg-gray-100" />
               </button>
             </div>
 
