@@ -44,7 +44,7 @@ const FeaturedProducts: FC = () => {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-heading font-bold">Featured Products</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {Array(4).fill(0).map((_, i) => (
               <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
@@ -72,7 +72,7 @@ const FeaturedProducts: FC = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-heading font-bold">Featured Products</h2>
-          
+
           <div className="flex space-x-2">
             <Button 
               variant="outline" 
@@ -94,8 +94,8 @@ const FeaturedProducts: FC = () => {
             </Button>
           </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[400px]">
           {getCurrentItems().map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

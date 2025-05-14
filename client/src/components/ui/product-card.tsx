@@ -1,4 +1,5 @@
-import { FC } from 'react';
+
+import { FC, useState } from 'react';
 import { Link } from 'wouter';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from './button';
@@ -9,6 +10,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const [imageError, setImageError] = useState(false);
+
   const handleAddToCart = () => {
     // TODO: Implement add to cart functionality
   };
@@ -18,14 +21,20 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     return numericPrice.toFixed(2);
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={product.imageUrl}
+            src={imageError ? '/assets/IMG-20250419-WA0019.jpg' : product.imageUrl}
             alt={product.name}
             className="w-full h-full object-cover"
+            onError={handleImageError}
+            loading="lazy"
           />
           {product.isOnSale && (
             <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded">
@@ -34,11 +43,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           )}
         </div>
       </Link>
-      <div className="p-4">
+      <div className="p-4 flex flex-col h-[calc(100%-12rem)]">
         <Link href={`/product/${product.id}`}>
-          <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
+          <h3 className="text-lg font-semibold mb-2 hover:text-primary transition-colors">
+            {product.name}
+          </h3>
         </Link>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
           {product.description}
         </p>
         <div className="mt-auto">
