@@ -22,18 +22,21 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         body: JSON.stringify({
           productId: product.id,
           quantity: 1
-        })
+        }),
+        credentials: 'include'
       });
       
       if (!response.ok) {
         throw new Error('Failed to add item to cart');
       }
-      
-      // Could add a toast notification here
-      console.log('Added to cart successfully');
+
+      const result = await response.json();
+      console.log('Added to cart successfully', result);
+      alert('Product added to cart successfully!');
       
     } catch (error) {
       console.error('Error adding to cart:', error);
+      alert('Failed to add product to cart');
     }
   };
 
@@ -51,7 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : product.imageUrl.startsWith('/') ? product.imageUrl : `/attached_assets/${product.imageUrl}`}
+            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : `/attached_assets/${product.imageUrl.split('/').pop()}`}
             alt={product.name}
             className="w-full h-full object-cover"
             onError={handleImageError}
