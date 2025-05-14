@@ -1,28 +1,21 @@
-import React from 'react';
 
-interface MagwereLogoProps {
+import { FC } from 'react';
+
+interface LogoProps {
   className?: string;
   isPrimary?: boolean;
 }
 
-const MagwereLogo: React.FC<MagwereLogoProps> = ({ className = 'h-10 w-auto', isPrimary = true }) => {
-  const primaryColor = '#e11d48'; // Tailwind rose-600
-  const secondaryColor = '#0f172a'; // Tailwind slate-900
-  
-  const mainColor = isPrimary ? primaryColor : secondaryColor;
-  
+const MagwereLogo: FC<LogoProps> = ({ className = "h-8 w-auto", isPrimary = true }) => {
   return (
-    <div className={`flex items-center ${className}`}>
-      {/* Simple text logo with styled text */}
-      <div className="flex flex-col">
-        <span className="font-bold text-lg md:text-xl tracking-tight" style={{ color: mainColor }}>
-          MAGWERE
-        </span>
-        <span className="text-xs md:text-sm font-medium text-gray-700">
-          HARDWARE & CONSTRUCTION
-        </span>
-      </div>
-    </div>
+    <img 
+      src="/attached_assets/Logo.png"
+      alt="Magware Hardware Store"
+      className={className}
+      style={{ 
+        filter: isPrimary ? 'none' : 'brightness(0) invert(1)'
+      }}
+    />
   );
 };
 

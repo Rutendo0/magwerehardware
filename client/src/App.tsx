@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useEffect } from 'react';
 
 import Layout from "@/components/layout/Layout";
 import Home from "./pages/home";
@@ -37,6 +38,15 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Initialize cart in local storage if it doesn't exist
+    if (typeof window !== 'undefined') {
+      if (!localStorage.getItem('cart')) {
+        localStorage.setItem('cart', JSON.stringify([]));
+      }
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

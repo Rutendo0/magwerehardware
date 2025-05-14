@@ -14,16 +14,17 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const handleAddToCart = async () => {
     try {
+      const cartSession = localStorage.getItem('cartSessionId');
       const response = await fetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': cartSession || ''
         },
         body: JSON.stringify({
           productId: product.id,
           quantity: 1
-        }),
-        credentials: 'include'
+        })
       });
       
       if (!response.ok) {
@@ -54,7 +55,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : product.imageUrl.startsWith('/') ? product.imageUrl : `/attached_assets/${product.imageUrl}`}
+            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : product.imageUrl.startsWith('http') ? product.imageUrl : `/attached_assets/${product.imageUrl}`}
             alt={product.name}
             className="w-full h-full object-cover"
             onError={handleImageError}

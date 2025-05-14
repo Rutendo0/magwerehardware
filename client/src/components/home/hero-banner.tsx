@@ -1,29 +1,40 @@
+
 import { FC } from 'react';
-import { useLocation } from 'wouter';
+import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 const HeroBanner: FC = () => {
-  const [_, navigate] = useLocation();
-
   return (
-    <section className="relative bg-black text-white">
-      <div className="container mx-auto px-4 py-24">
+    <section className="relative bg-blue-600 text-white py-20">
+      <div className="container mx-auto px-4">
         <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Your One-Stop Hardware & Building Materials Store
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            Your One-Stop Hardware Store
           </h1>
-          <p className="text-xl mb-8">
-            Quality building materials, solar solutions, and hardware tools at competitive prices
+          <p className="text-lg md:text-xl mb-8 text-blue-100">
+            Quality hardware products, construction materials, and exceptional service at competitive prices.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button onClick={() => navigate('/products')} size="lg">
-              Shop Now
-            </Button>
-            <Button onClick={() => navigate('/contact')} variant="outline" size="lg">
-              Contact Us
-            </Button>
+            <Link href="/products">
+              <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-blue-50">
+                Shop Now <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-blue-700">
+                Contact Us
+              </Button>
+            </Link>
           </div>
         </div>
+      </div>
+      <div className="absolute bottom-0 right-0 w-1/2 h-full hidden lg:block">
+        <img 
+          src="/attached_assets/WhatsApp Image 2025-05-14 at 10.31.14.jpeg"
+          alt="Hardware Store Products"
+          className="w-full h-full object-cover opacity-50"
+        />
       </div>
     </section>
   );
