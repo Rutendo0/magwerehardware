@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
@@ -116,8 +117,6 @@ const Header = () => {
 
                 <div className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="py-2">
-
-
                     {categories?.map((category) => (
                       <button 
                         key={category.id}
@@ -243,4 +242,3 @@ const Header = () => {
 };
 
 export default Header;
-}
