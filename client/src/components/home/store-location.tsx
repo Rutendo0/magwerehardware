@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Phone } from 'lucide-react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { AdvancedMarkerElement } from '@googlemaps/markerwithlabel';
+import { AdvancedMarkerElement } from "@googlemaps/marker";
 
 const StoreLocation: FC = () => {
   // Store location coordinates (latitude and longitude)
