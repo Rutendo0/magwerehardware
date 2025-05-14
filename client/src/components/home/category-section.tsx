@@ -23,7 +23,7 @@ interface EnhancedCategoryProps {
 const CategoryCard: FC<EnhancedCategoryProps> = ({ title, description, image, href, featured }) => (
   <div className={`bg-white rounded-xl shadow-md overflow-hidden transition duration-300 ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
     <img 
-      src={`/attached_assets/${image.split('/').pop()}`}
+      src={image}
       alt={title} 
       className="h-64 w-full object-cover"
       onError={(e) => {
