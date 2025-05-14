@@ -31,7 +31,7 @@ const HeroBanner: FC = () => {
       </div>
       <div className="absolute bottom-0 right-0 w-1/2 h-full hidden lg:block">
         <img 
-          src={`/attached_assets/WhatsApp Image 2025-05-14 at 10.31.14.jpeg`}
+          src={import.meta.env.BASE_URL + `attached_assets/WhatsApp Image 2025-05-14 at 10.31.14.jpeg`}
           alt="Hardware Store Products"
           className="w-full h-full object-cover opacity-50"
         />

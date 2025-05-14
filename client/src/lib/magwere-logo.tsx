@@ -9,7 +9,7 @@ interface LogoProps {
 const MagwereLogo: FC<LogoProps> = ({ className = "h-8 w-auto", isPrimary = true }) => {
   return (
     <img 
-      src="/attached_assets/Logo.png"
+      src={import.meta.env.BASE_URL + "attached_assets/Logo.png"}
       alt="Magware Hardware Store"
       className={className}
       style={{ 
