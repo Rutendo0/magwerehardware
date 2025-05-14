@@ -176,7 +176,7 @@ export class MemStorage implements IStorage {
         inStock: true
       },
         imageUrl: "/assets/IMG-20250419-WA0016.jpg",
-        category: "power-tools",
+        category: "hardware-tools",
         brand: "WADFOW",
         featured: true,
         inStock: true
