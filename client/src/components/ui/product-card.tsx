@@ -55,10 +55,16 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
-            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : product.imageUrl.startsWith('http') ? product.imageUrl : product.imageUrl.startsWith('/') ? product.imageUrl : `/attached_assets/${product.imageUrl}`}
+            src={imageError ? '/attached_assets/IMG-20250419-WA0019.jpg' : 
+                 product.imageUrl.startsWith('http') ? product.imageUrl : 
+                 product.imageUrl.startsWith('/attached_assets/') ? product.imageUrl :
+                 `/attached_assets/${product.imageUrl.replace(/^\//, '')}`}
             alt={product.name}
             className="w-full h-full object-cover"
-            onError={handleImageError}
+            onError={(e) => {
+              console.error('Failed to load product image:', (e.target as HTMLImageElement).src);
+              handleImageError();
+            }}
             loading="lazy"
           />
           {product.isOnSale && (

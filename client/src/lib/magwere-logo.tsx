@@ -13,7 +13,12 @@ const MagwereLogo: FC<LogoProps> = ({ className = "h-8 w-auto", isPrimary = true
       alt="Magware Hardware Store"
       className={className}
       style={{ 
-        filter: isPrimary ? 'none' : 'brightness(0) invert(1)'
+        filter: isPrimary ? 'none' : 'brightness(0) invert(1)',
+        objectFit: 'contain'
+      }}
+      onError={(e) => {
+        const img = e.target as HTMLImageElement;
+        console.error('Failed to load logo:', img.src);
       }}
     />
   );
