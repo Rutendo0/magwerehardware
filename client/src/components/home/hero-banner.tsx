@@ -16,7 +16,7 @@ const HeroBanner: FC = () => {
             Premium hardware, construction materials, and expert solutions at competitive prices. Your trusted partner in construction and home improvement.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/products">
+            <Link href="/categories">
               <Button size="lg" variant="secondary" className="bg-white text-blue-600 hover:bg-blue-50">
                 Shop Now <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
