@@ -21,15 +21,19 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     try {
       setIsAdding(true);
       const cartSession = localStorage.getItem('cartSessionId');
-      const response = await fetch('/api/cart', {
+      const sessionId = localStorage.getItem('cartSessionId') || crypto.randomUUID();
+      localStorage.setItem('cartSessionId', sessionId);
+      
+      const response = await fetch('http://localhost:5000/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': cartSession || ''
+          'Authorization': sessionId
         },
         body: JSON.stringify({
           productId: product.id,
-          quantity: 1
+          quantity: 1,
+          sessionId
         })
       });
 
