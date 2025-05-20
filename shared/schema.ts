@@ -74,5 +74,20 @@ export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 
+// Bulk orders table
+export const bulkOrders = pgTable("bulk_orders", {
+  id: serial("id").primaryKey(),
+  companyName: text("company_name").notNull(),
+  orderData: text("order_data").notNull(),
+  status: text("status").notNull().default("pending"),
+  integrationKey: text("integration_key"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertBulkOrderSchema = createInsertSchema(bulkOrders).omit({ id: true, createdAt: true });
+
+export type BulkOrder = typeof bulkOrders.$inferSelect;
+export type InsertBulkOrder = z.infer<typeof insertBulkOrderSchema>;
+
 export type Subscriber = typeof subscribers.$inferSelect;
 export type InsertSubscriber = z.infer<typeof insertSubscriberSchema>;

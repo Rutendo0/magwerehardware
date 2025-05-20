@@ -249,6 +249,43 @@ router.use((req, res, next) => {
     }
   });
 
+  // Bulk orders API endpoint
+  router.post("/bulk-orders", async (req: Request, res: Response) => {
+    try {
+      const { orderData, integrationKey } = req.body;
+      
+      // Validate integration key
+      const isValidKey = await storage.validateIntegrationKey(integrationKey);
+      if (!isValidKey) {
+        return res.status(401).json({ message: "Invalid integration key" });
+      }
+
+      // Process bulk order
+      const order = await storage.createBulkOrder(orderData);
+      res.status(201).json({ 
+        message: "Bulk order received",
+        orderId: order.id,
+        status: "pending"
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Error processing bulk order" });
+    }
+  });
+
+  // Get bulk order status
+  router.get("/bulk-orders/:orderId", async (req: Request, res: Response) => {
+    try {
+      const { orderId } = req.params;
+      const order = await storage.getBulkOrder(parseInt(orderId));
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching order status" });
+    }
+  });
+
   // Newsletter subscription
   router.post("/subscribe", async (req: Request, res: Response) => {
     try {

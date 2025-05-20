@@ -214,6 +214,22 @@ const BulkOrders = () => {
         </div>
 
         <div className="mt-12 bg-gray-50 rounded-lg p-8">
+          <h2 className="text-xl font-bold mb-4">API Integration</h2>
+          <div className="mb-8">
+            <p className="text-neutral-600 mb-4">
+              For large enterprises, we offer API integration with your procurement systems. Contact our team to get your API integration key and documentation.
+            </p>
+            <div className="bg-white p-4 rounded-md">
+              <h3 className="font-medium mb-2">API Endpoints:</h3>
+              <code className="block bg-gray-100 p-3 rounded text-sm mb-2">
+                POST /api/bulk-orders
+              </code>
+              <code className="block bg-gray-100 p-3 rounded text-sm">
+                GET /api/bulk-orders/:orderId
+              </code>
+            </div>
+          </div>
+
           <h2 className="text-xl font-bold mb-4">Bulk Order Benefits</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
