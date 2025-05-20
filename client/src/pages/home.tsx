@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import HeroBanner from '@/components/home/hero-banner';
 import PromoBanner from '@/components/home/promo-banner';
+import TrustedBrands from '@/components/home/trusted-brands';
 import CategorySection from '@/components/home/category-section';
 import FeaturedProductsNew from '@/components/home/featured-products-new';
 import SolarSolutionsBanner from '@/components/home/solar-solutions-banner';
@@ -15,6 +16,7 @@ const Home: FC = () => {
     <main>
       <HeroBanner />
       <PromoBanner />
+      <TrustedBrands />
       <CategorySection />
       <FeaturedProductsNew />
       <SolarSolutionsBanner />

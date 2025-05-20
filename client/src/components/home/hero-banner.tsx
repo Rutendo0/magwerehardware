@@ -6,14 +6,14 @@ import { ArrowRight } from 'lucide-react';
 
 const HeroBanner: FC = () => {
   return (
-    <section className="relative bg-blue-600 text-white py-20">
+    <section className="relative bg-purple-800 text-white py-24">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Your One-Stop Hardware Store
+        <div className="max-w-3xl relative z-10">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            Building Zimbabwe's Future Together
           </h1>
-          <p className="text-lg md:text-xl mb-8 text-blue-100">
-            Quality hardware , construction materials, and exceptional service at competitive prices.
+          <p className="text-xl md:text-2xl mb-8 text-purple-100">
+            Premium hardware, construction materials, and expert solutions at competitive prices. Your trusted partner in construction and home improvement.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link href="/products">

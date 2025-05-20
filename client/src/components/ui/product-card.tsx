@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { Link } from 'wouter';
 import { ShoppingCart } from 'lucide-react';
@@ -26,7 +25,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           quantity: 1
         })
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to add item to cart');
       }
@@ -34,7 +33,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       const result = await response.json();
       console.log('Added to cart successfully', result);
       alert('Product added to cart successfully!');
-      
+
     } catch (error) {
       console.error('Error adding to cart:', error);
       alert('Failed to add product to cart');
@@ -51,7 +50,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-xl group">
       <Link href={`/product/${product.id}`}>
         <div className="relative h-48">
           <img
