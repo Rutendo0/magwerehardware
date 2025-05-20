@@ -1,27 +1,28 @@
 
 import { FC } from 'react';
 
-interface LogoProps {
+interface MagwareLogoProps {
   className?: string;
   isPrimary?: boolean;
 }
 
-const MagwereLogo: FC<LogoProps> = ({ className = "h-16 w-auto", isPrimary = true }) => {
+const MagwareLogo: FC<MagwareLogoProps> = ({ className = "", isPrimary = true }) => {
+  const primaryColor = isPrimary ? "text-purple-600" : "text-white";
+  const secondaryColor = isPrimary ? "text-neutral-800" : "text-white";
+  
   return (
-    <img 
-      src="/attached_assets/Logo.png"
-      alt="Magware Hardware Store"
-      className={className}
-      style={{ 
-        filter: isPrimary ? 'none' : 'brightness(0) invert(1)',
-        objectFit: 'contain'
-      }}
-      onError={(e) => {
-        const img = e.target as HTMLImageElement;
-        console.error('Failed to load logo:', img.src);
-      }}
-    />
+    <div className={`flex items-center ${className}`}>
+      <div className="text-3xl font-bold relative">
+        <span className={`${primaryColor} tracking-wider`}>MAG</span>
+        <span className={`${secondaryColor} tracking-wider`}>WARE</span>
+        <div className={`absolute -bottom-1 left-0 w-full h-0.5 ${isPrimary ? 'bg-purple-600' : 'bg-white'}`}></div>
+      </div>
+      <div className="flex flex-col ml-2 border-l-2 pl-2 border-purple-600">
+        <span className="text-sm font-medium text-neutral-600">Hardware</span>
+        <span className="text-xs text-neutral-500">& Building Supplies</span>
+      </div>
+    </div>
   );
 };
 
-export default MagwereLogo;
+export default MagwareLogo;

@@ -90,8 +90,11 @@ const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <button onClick={() => navigate('/')} className="block">
-                <MagwereLogo className="h-28 w-auto  bg-gray-100" />
+              <button 
+                onClick={() => navigate('/')} 
+                className="block px-4 py-2 rounded-lg transition-transform hover:scale-105"
+              >
+                <MagwareLogo className="h-16" />
               </button>
             </div>
 
