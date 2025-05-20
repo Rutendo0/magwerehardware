@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
-import MagwereLogo from '@/lib/magwere-logo';
+import MagwareLogo from '@/lib/magware-logo';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, Menu, Phone, Mail, User, Search, Heart, X } from 'lucide-react';
 import MobileMenu from './mobile-menu';
