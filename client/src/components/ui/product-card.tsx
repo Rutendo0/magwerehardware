@@ -42,7 +42,14 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       toast({
         title: "Added to Cart",
         description: `${product.name} has been added to your cart`,
-        duration: 2000,
+        duration: 3000,
+        action: (
+          <Link href="/cart">
+            <Button variant="outline" size="sm">
+              View Cart
+            </Button>
+          </Link>
+        ),
       });
 
     } catch (error) {
