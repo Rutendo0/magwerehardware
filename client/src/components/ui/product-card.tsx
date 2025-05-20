@@ -32,7 +32,8 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         },
         body: JSON.stringify({
           productId: product.id,
-          quantity: 1
+          quantity: 1,
+          sessionId: sessionId
         })
       });
 
