@@ -30,7 +30,7 @@ const Cart: FC = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [processingItemId, setProcessingItemId] = useState<number | null>(null);
-  
+
 // In your cart component
 const { data: cart, isLoading, error } = useQuery<CartResponse>({
   queryKey: ['/api/cart'],
@@ -41,7 +41,7 @@ const { data: cart, isLoading, error } = useQuery<CartResponse>({
       sessionId = crypto.randomUUID();
       localStorage.setItem('cartSessionId', sessionId);
     }
-    
+
     const response = await fetch('http://localhost:5000/api/cart', {
       headers: {
         'Authorization': sessionId
@@ -80,7 +80,7 @@ const addToCartMutation = useMutation({
       setProcessingItemId(null);
     }
   });
-  
+
   const removeCartItemMutation = useMutation({
     mutationFn: async (id: number) => {
       return apiRequest('DELETE', `/api/cart/${id}`);
@@ -102,7 +102,7 @@ const addToCartMutation = useMutation({
       setProcessingItemId(null);
     }
   });
-  
+
   const clearCartMutation = useMutation({
     mutationFn: async () => {
       return apiRequest('DELETE', '/api/cart');
@@ -122,24 +122,24 @@ const addToCartMutation = useMutation({
       });
     }
   });
-  
+
   const handleQuantityChange = (item: CartItemWithProduct, newQuantity: number) => {
     if (newQuantity < 1) return;
     setProcessingItemId(item.id);
     updateCartItemMutation.mutate({ id: item.id, quantity: newQuantity });
   };
-  
+
   const handleRemoveItem = (id: number) => {
     setProcessingItemId(id);
     removeCartItemMutation.mutate(id);
   };
-  
+
   const handleClearCart = () => {
     if (window.confirm('Are you sure you want to clear your cart?')) {
       clearCartMutation.mutate();
     }
   };
-  
+
   // Calculate totals
   const calculateSubtotal = (items: CartItemWithProduct[]) => {
     return items.reduce((sum, item) => {
@@ -147,11 +147,11 @@ const addToCartMutation = useMutation({
       return sum + (Number(price) * item.quantity);
     }, 0);
   };
-  
+
   const calculateTotal = (subtotal: number) => {
     return subtotal; // In a real app, you might add tax, shipping, etc.
   };
-  
+
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -163,7 +163,7 @@ const addToCartMutation = useMutation({
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -174,10 +174,10 @@ const addToCartMutation = useMutation({
       </div>
     );
   }
-  
+
   const items = cart?.items || [];
   const isEmpty = items.length === 0;
-  
+
   if (isEmpty) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -190,7 +190,7 @@ const addToCartMutation = useMutation({
           <p className="text-neutral-600 mb-6">
             Looks like you haven't added anything to your cart yet.
           </p>
-          <Link href="/products">
+          <Link href="/categories">
             <Button>
               Continue Shopping
             </Button>
@@ -199,14 +199,14 @@ const addToCartMutation = useMutation({
       </div>
     );
   }
-  
+
   const subtotal = calculateSubtotal(items);
   const total = calculateTotal(subtotal);
-  
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -291,7 +291,7 @@ const addToCartMutation = useMutation({
               </TableBody>
             </Table>
           </div>
-          
+
           <div className="flex justify-between mt-4">
             <Button 
               variant="outline"
@@ -300,8 +300,8 @@ const addToCartMutation = useMutation({
             >
               Clear Cart
             </Button>
-            
-            <Link href="/products">
+
+            <Link href="/categories">
               <Button variant="ghost" className="flex items-center">
                 <ShoppingBag className="mr-2 h-4 w-4" />
                 Continue Shopping
@@ -309,11 +309,11 @@ const addToCartMutation = useMutation({
             </Link>
           </div>
         </div>
-        
+
         <div>
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-            
+
             <div className="space-y-3 mb-6">
               <div className="flex justify-between">
                 <span className="text-neutral-600">Subtotal</span>
@@ -328,11 +328,11 @@ const addToCartMutation = useMutation({
                 <span className="text-primary">${total.toFixed(2)}</span>
               </div>
             </div>
-            
+
             <Button className="w-full">
               Proceed to Checkout
             </Button>
-            
+
             <div className="mt-6">
               <h3 className="font-medium mb-2">We Accept</h3>
               <div className="flex space-x-2">
@@ -342,7 +342,7 @@ const addToCartMutation = useMutation({
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow-md p-6 mt-4">
             <h3 className="font-medium mb-2">Have a coupon?</h3>
             <div className="flex">
@@ -356,7 +356,7 @@ const addToCartMutation = useMutation({
               </Button>
             </div>
           </div>
-          
+
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
             <h3 className="text-green-800 font-medium mb-1">Free Shipping</h3>
             <p className="text-green-700 text-sm">
