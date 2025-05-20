@@ -56,8 +56,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           <img
             src={imageError ? '/attached_assets/Logo.png' : 
                  product.imageUrl.startsWith('http') ? product.imageUrl : 
-                 product.imageUrl.startsWith('/') ? product.imageUrl :
-                 `/attached_assets/${product.imageUrl}`}
+                 `/attached_assets/${product.imageUrl.replace('/attached_assets/', '')}`}
             alt={product.name}
             className="w-full h-full object-cover"
             onError={(e) => {
