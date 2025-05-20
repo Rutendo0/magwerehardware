@@ -24,7 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       const sessionId = localStorage.getItem('cartSessionId') || crypto.randomUUID();
       localStorage.setItem('cartSessionId', sessionId);
       
-      const response = await fetch('/api/cart', {
+      const response = await fetch('http://0.0.0.0:5000/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,8 +40,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         throw new Error('Failed to add item to cart');
       }
 
-      await queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
       const result = await response.json();
+      console.log('Added to cart successfully', result);
+      
+      // Force refresh cart data
+      await queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+      await queryClient.refetchQueries({ queryKey: ['/api/cart'] });
       
       // Update the cart cache
       await queryClient.refetchQueries({ queryKey: ['/api/cart'] });
