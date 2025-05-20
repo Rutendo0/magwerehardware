@@ -24,7 +24,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       const sessionId = localStorage.getItem('cartSessionId') || crypto.randomUUID();
       localStorage.setItem('cartSessionId', sessionId);
       
-      const response = await fetch('http://localhost:5000/api/cart', {
+      const response = await fetch('/api/cart', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,8 +32,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         },
         body: JSON.stringify({
           productId: product.id,
-          quantity: 1,
-          sessionId
+          quantity: 1
         })
       });
 
