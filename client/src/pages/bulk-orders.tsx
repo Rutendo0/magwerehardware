@@ -214,19 +214,58 @@ const BulkOrders = () => {
         </div>
 
         <div className="mt-12 bg-gray-50 rounded-lg p-8">
-          <h2 className="text-xl font-bold mb-4">API Integration</h2>
+          <h2 className="text-xl font-bold mb-4">Enterprise Integration Solutions</h2>
           <div className="mb-8">
-            <p className="text-neutral-600 mb-4">
-              For large enterprises, we offer API integration with your procurement systems. Contact our team to get your API integration key and documentation.
-            </p>
-            <div className="bg-white p-4 rounded-md">
-              <h3 className="font-medium mb-2">API Endpoints:</h3>
-              <code className="block bg-gray-100 p-3 rounded text-sm mb-2">
-                POST /api/bulk-orders
-              </code>
-              <code className="block bg-gray-100 p-3 rounded text-sm">
-                GET /api/bulk-orders/:orderId
-              </code>
+            <div className="prose max-w-none">
+              <h3 className="text-lg font-semibold mb-3">Streamline Your Procurement Process</h3>
+              <p className="text-neutral-600 mb-4">
+                For large organizations and construction companies, we offer seamless integration between your procurement system and our platform:
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 className="font-medium text-primary mb-2">Automated Ordering</h4>
+                  <ul className="list-disc pl-4 text-neutral-600 space-y-2">
+                    <li>Direct integration with your ERP system</li>
+                    <li>Automated purchase orders</li>
+                    <li>Real-time inventory checks</li>
+                    <li>Bulk order processing</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <h4 className="font-medium text-primary mb-2">Enterprise Benefits</h4>
+                  <ul className="list-disc pl-4 text-neutral-600 space-y-2">
+                    <li>Dedicated account management</li>
+                    <li>Priority order fulfillment</li>
+                    <li>Custom pricing agreements</li>
+                    <li>Detailed reporting and analytics</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <h4 className="font-medium text-primary mb-3">How It Works</h4>
+                <ol className="list-decimal pl-4 text-neutral-600 space-y-3">
+                  <li>Contact our enterprise team to set up your account</li>
+                  <li>Receive your unique API integration key</li>
+                  <li>Connect your procurement system using our secure API</li>
+                  <li>Start placing automated bulk orders</li>
+                </ol>
+              </div>
+
+              <div className="bg-primary/5 p-6 rounded-lg border border-primary/10">
+                <h4 className="font-medium text-primary mb-2">Ready to Get Started?</h4>
+                <p className="text-neutral-600 mb-4">
+                  Our enterprise team is ready to help you integrate your systems and streamline your procurement process.
+                </p>
+                <button 
+                  onClick={() => window.location.href = '/contact'}
+                  className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  Contact Enterprise Team
+                </button>
+              </div>
             </div>
           </div>
 
