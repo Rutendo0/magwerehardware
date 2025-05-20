@@ -2,6 +2,8 @@ import { FC, useState } from 'react';
 import { Link } from 'wouter';
 import { ShoppingCart } from 'lucide-react';
 import { Button } from './button';
+import { useToast } from '@/hooks/use-toast';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Product } from '@shared/schema';
 
 interface ProductCardProps {
@@ -11,8 +13,13 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [imageError, setImageError] = useState(false);
 
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [isAdding, setIsAdding] = useState(false);
+
   const handleAddToCart = async () => {
     try {
+      setIsAdding(true);
       const cartSession = localStorage.getItem('cartSessionId');
       const response = await fetch('/api/cart', {
         method: 'POST',
@@ -30,13 +37,22 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         throw new Error('Failed to add item to cart');
       }
 
-      const result = await response.json();
-      console.log('Added to cart successfully', result);
-      alert('Product added to cart successfully!');
+      await queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+      
+      toast({
+        title: "Added to Cart",
+        description: `${product.name} has been added to your cart`,
+        duration: 2000,
+      });
 
     } catch (error) {
-      console.error('Error adding to cart:', error);
-      alert('Failed to add product to cart');
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -88,7 +104,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           <Button 
             onClick={handleAddToCart}
             className="w-full"
-            disabled={!product.inStock}
+            disabled={!product.inStock || isAdding}
           >
             <ShoppingCart className="mr-2 h-4 w-4" />
             {product.inStock ? 'Add to Cart' : 'Out of Stock'}
