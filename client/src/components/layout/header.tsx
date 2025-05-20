@@ -134,13 +134,6 @@ const Header = () => {
 
               <button 
                 className="font-medium hover:text-primary"
-                onClick={() => navigate('/category/solar-solutions')}
-              >
-                Solar Solutions
-              </button>
-
-              <button 
-                className="font-medium hover:text-primary"
                 onClick={() => navigate('/bulk-orders')}
               >
                 Bulk Orders

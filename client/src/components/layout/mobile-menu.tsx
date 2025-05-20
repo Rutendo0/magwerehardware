@@ -114,14 +114,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
             <button
               className="flex items-center w-full py-3 px-4 rounded-md hover:bg-gray-100"
-              onClick={() => handleNavigate('/category/solar-solutions')}
-            >
-              <Zap className="mr-3 h-5 w-5 text-gray-500" />
-              <span className="font-medium">Solar Solutions</span>
-            </button>
-
-            <button
-              className="flex items-center w-full py-3 px-4 rounded-md hover:bg-gray-100"
               onClick={() => handleNavigate('/bulk-orders')}
             >
               <Briefcase className="mr-3 h-5 w-5 text-gray-500" />
