@@ -31,18 +31,16 @@ const Cart: FC = () => {
   const { toast } = useToast();
   const [processingItemId, setProcessingItemId] = useState<number | null>(null);
 
-// In your cart component
 const { data: cart, isLoading, error } = useQuery<CartResponse>({
   queryKey: ['/api/cart'],
   queryFn: async () => {
-    // Get or create session ID
     let sessionId = localStorage.getItem('cartSessionId');
     if (!sessionId) {
       sessionId = crypto.randomUUID();
       localStorage.setItem('cartSessionId', sessionId);
     }
 
-    const response = await fetch('http://localhost:5000/api/cart', {
+    const response = await fetch('/api/cart', {
       headers: {
         'Authorization': sessionId
       }

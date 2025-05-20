@@ -38,6 +38,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       }
 
       await queryClient.invalidateQueries({ queryKey: ['/api/cart'] });
+      const result = await response.json();
+      
+      // Update the cart cache
+      await queryClient.refetchQueries({ queryKey: ['/api/cart'] });
       
       toast({
         title: "Added to Cart",
