@@ -65,7 +65,7 @@ app.use((req, res, next) => {
   } else {
     // In production mode:
     // Use a static path to your client build folder without relying on __dirname
-    const clientDistPath = path.join(process.cwd(), 'client', 'dist');
+    const clientDistPath = path.join(process.cwd(), 'server', 'client');
 
     // 1. Serve static frontend files
     app.use(express.static(clientDistPath));
