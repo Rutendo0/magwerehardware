@@ -109,10 +109,10 @@ export class MemStorage implements IStorage {
     // Add products
     const products: InsertProduct[] = [
       {
-        name: "Cement Mixture S1",
-        description: "High-quality cement mixture for construction",
+        name: "Cov-Lite",
+        description: "Multi-purpose plaster for interior and exterior use",
         price: "15.99",
-        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.24.jpeg",
+        imageUrl: "/attached_assets/IMG-20250419-WA0021.jpg",
         category: "building-materials",
         brand: "Magwere",
         featured: true,
@@ -132,7 +132,7 @@ export class MemStorage implements IStorage {
         name: "Industrial Paint Bucket",
         description: "Large capacity paint for commercial use",
         price: "89.99",
-        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.22.jpeg",
+        imageUrl: "/attached_assets/WhatsApp Image 2025-05-14 at 10.49.16 (1).jpeg",
         category: "paint-finishes",
         brand: "Magwere",
         featured: true,

@@ -79,20 +79,13 @@ const Footer = () => {
                 </li>
                 <li>
                   <button
-                    onClick={() => handleNavigate('/products')}
+                    onClick={() => handleNavigate('/categories')}
                     className="text-gray-400 hover:text-white transition-colors text-sm"
                   >
-                    Products
+                    Categories
                   </button>
                 </li>
-                <li>
-                  <button
-                    onClick={() => handleNavigate('/category/solar-solutions')}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
-                  >
-                    Solar Solutions
-                  </button>
-                </li>
+                
                 <li>
                   <button
                     onClick={() => handleNavigate('/bulk-orders')}

@@ -3,12 +3,9 @@ import { FC } from 'react';
 
 const TrustedBrands: FC = () => {
   const brands = [
-    { name: "BuildPro", imageUrl: "/attached_assets/IMG-20250419-WA0019.jpg" },
-    { name: "ColorMaster", imageUrl: "/attached_assets/IMG-20250419-WA0010.jpg" },
-    { name: "BrightTech", imageUrl: "/attached_assets/IMG-20250419-WA0009.jpg" },
-    { name: "SolarEdge", imageUrl: "/attached_assets/IMG-20250419-WA0016.jpg" },
-    { name: "TileGrip", imageUrl: "/attached_assets/IMG-20250419-WA0011.jpg" },
-    { name: "EpoxyMaster", imageUrl: "/attached_assets/IMG-20250419-WA0013.jpg" }
+    { name: "Total", imageUrl: "/attached_assets/total.png" },
+    { name: "Splash", imageUrl: "/attached_assets/splash.png" },
+    { name: "Rhi-Lite", imageUrl: "/attached_assets/rhi.jfif" },
   ];
 
   return (
