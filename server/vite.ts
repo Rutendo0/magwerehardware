@@ -21,7 +21,7 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  const distPath = path.join(process.cwd(), 'server', 'client'); // More reliable for production
+  const distPath = path.join(process.cwd(), 'client', 'dist'); // More reliable for production
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
