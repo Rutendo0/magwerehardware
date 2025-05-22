@@ -17,7 +17,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.join(process.cwd(), 'dist', 'client'),
+    outDir:  'client/dist',
     assetsDir: 'assets',
     emptyOutDir: true,
     rollupOptions: {
