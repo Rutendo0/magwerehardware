@@ -1,3 +1,4 @@
+import fs from "fs";
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -63,9 +64,12 @@ app.use((req, res, next) => {
     // In development mode: setup Vite
     await setupVite(app, server);
   } else {
-    // In production mode:
-    // Use a static path to your client build folder without relying on __dirname
-    const clientDistPath = path.join(process.cwd(), 'server', 'client');
+
+    const clientDistPath = path.join(process.cwd(), 'dist', 'client');
+
+    if (!fs.existsSync(clientDistPath)) {
+    throw new Error(`Client build not found at ${clientDistPath}. Run 'npm run build' first.`);
+  }
 
     // 1. Serve static frontend files
     app.use(express.static(clientDistPath));
