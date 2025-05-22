@@ -5,6 +5,7 @@ import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
 import viteConfig from "../vite.config";
 import { nanoid } from "nanoid";
+import { fileURLToPath } from 'url';
 
 const viteLogger = createLogger();
 
@@ -17,6 +18,23 @@ export function log(message: string, source = "express") {
   });
 
   console.log(`${formattedTime} [${source}] ${message}`);
+}
+
+export function serveStatic(app: Express) {
+  const distPath = path.join(process.cwd(), 'server', 'client'); // More reliable for production
+
+  if (!fs.existsSync(distPath)) {
+    throw new Error(
+      `Could not find the build directory: ${distPath}, make sure to build the client first`
+    );
+  }
+
+  app.use(express.static(distPath));
+
+  // Catch-all route to serve the React app's index.html for any non-API route
+  app.use("*", (_req, res) => {
+    res.sendFile(path.resolve(distPath, "index.html"));
+  });
 }
 
 export async function setupVite(app: Express, server: Server) {
@@ -67,19 +85,4 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
-export function serveStatic(app: Express) {
-  const distPath = path.resolve(__dirname, "client"); // Look for build in /server/client
-
-  if (!fs.existsSync(distPath)) {
-    throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`
-    );
-  }
-
-  app.use(express.static(distPath));
-
-  // Catch-all route to serve the React app's index.html for any non-API route
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
-  });
-}
+// Removed duplicate serveStatic function to avoid redeclaration errors.
